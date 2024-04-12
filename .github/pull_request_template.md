@@ -1,4 +1,4 @@
-JIRA Ticket link: ![https://makeitmvp.atlassian.net/browse/PC-52](PC-xx)
+JIRA Ticket link: [PC-xx](https://makeitmvp.atlassian.net/browse/PC-xx)
 
 ## Type of change
 
