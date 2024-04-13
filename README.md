@@ -49,15 +49,26 @@ The project structure is organized as follows:
 ```
 ├── src/
 │   ├── components/
-│   │   ├── App.js
 │   │   ├── ...
-│   ├── styles/
-│   │   ├── main.scss
+│   ├── Firebase/
+│   │   ├── firebase-config.jsx
 │   │   ├── ...
+│   ├── pages/
+│   │   ├── HomePage.jsx
+│   │   ├── HomePage.scss
+│   │   ├── ...
+│   ├── styles/partials
+│   │   ├── _global.scss
+│   │   ├── _mixins.scss
+│   │   ├── _typography.scss
+│   │   ├── _variables.scss
+│   ├── App.js
 │   ├── index.js
 ├── public/
 │   ├── index.html
 │   ├── ...
+├── .env
+├── .gitignore
 ├── package.json
 ├── README.md
 ```
