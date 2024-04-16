@@ -7,7 +7,7 @@ async function doesMemberExist(snapshot) {
 
 // Change 'Users' path to appropriate members path when the collection is created
 async function getMembers() {
-    const membersCollection = collection(db, 'users');
+    const membersCollection = collection(db, 'Users');
     const membersSnapshot = await getDocs(membersCollection);
     const membersList = membersSnapshot.docs.map(doc => doc.data());
     return membersList;
