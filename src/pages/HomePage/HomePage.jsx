@@ -5,32 +5,33 @@ import { getResponseContent } from '../../utils/openAIcall';
 const Home = () => {
 
   const [aiResponseContent, setAiResponseContent] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchResponse = async () => {
-
-      // awaits result of getResponseContent from utils, which makes the API call, before setting the state to that result
-      const responseContent = await getResponseContent([
-        { role: "system", content: "You are a friendly assistant, that gives responses to a community organizer in JSON format." },
+    let requestObj = {
+      messages: [
+        { role: "system", content: "You are a friendly assistant, that gives responses to a community organizer appropriate to LinkedIn in JSON format just post content between 200 and 2000 characters in length, no title. Don't include any extra text outside of the post content itself." },
         { role: "user", content: "Help me write a professional sounding post about my upcoming community event, suitable for posting on LinkedIn." },
-        { role: "assistant", content: "What kind of event do you want to promote?" },
-        { role: "user", content: "I want to tell everyone about a livestream I'm hosting with a guest speaker." },
-        { role: "assistant", content: "Who is the speaker and what are they speaking about?" },
-        { role: "user", content: "The guest speaker is Mickey Mouse and he is speaking about how AI-generated animation could threaten his job." }
       ],
-      "gpt-3.5-turbo",
-      1.0
-      );
-      setAiResponseContent(responseContent.content)
+      model: "gpt-3.5-turbo",
+      temperature: 0.02
     }
-    fetchResponse();
+    const getOpenAIResponse = async () => {
+
+        // awaits result of getResponseContent from utils, which makes the API call, before setting the state to that result
+        const responseContent = await getResponseContent(requestObj);
+        // I will rename these
+        setAiResponseContent(responseContent.content ? responseContent.content : responseContent)
+        setLoading(false)
+    }
+    getOpenAIResponse();
   }, [])
 
 
   return (
     <div className="home">
       <h1 className="home__title"> Welcome !</h1>
-      <p>{aiResponseContent}</p>
+      <p>{loading ? "Loading..." : aiResponseContent}</p>
     </div>
   );
 };
