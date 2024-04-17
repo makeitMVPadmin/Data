@@ -7,13 +7,25 @@ import PreviewBox from "../../components/PreviewBox/PreviewBox";
 const Home = () => {
   const [inputText, setInputText] = useState("");
   const [previewText, setPreviewText] = useState("Preview here");
+  const [editing, setEditing] = useState(false);
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
 
   // placeholder to handle OpenAI request
-  const handleGenerateButtonClick = () => {};
+  const handleGenerateButtonClick = () => {
+    if (inputText) {
+      setPreviewText(inputText);
+      setEditing(!editing);
+    } else {
+      alert("Please add input!");
+    }
+  };
+
+  const toggleEditing = () => {
+    setEditing(!editing);
+  };
 
   // placeholder to handle LinkedIn posting
   const handlePostButtonClick = () => {};
@@ -34,10 +46,19 @@ const Home = () => {
         />
       </div>
       <div className="promptpage__preview-container">
-        <PreviewBox
-          previewText={previewText}
-          className="promptpage__preview-box"
-        />
+        {editing ? (
+          <InputBox
+            value={previewText}
+            onChange={(e) => setPreviewText(e.target.value)}
+            className="promptpage__preview-box"
+          />
+        ) : (
+          <PreviewBox
+            previewText={previewText}
+            className="promptpage__preview-box"
+            onClickEdit={toggleEditing}
+          />
+        )}
         <Button
           buttonText="Post on LinkedIn"
           className="post"
