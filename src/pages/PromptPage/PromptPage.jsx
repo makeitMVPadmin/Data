@@ -15,7 +15,7 @@ const Home = () => {
   // placeholder to handle OpenAI request
   const handleGenerateButtonClick = () => {};
 
-  // placeholder to handle LinkedIn request
+  // placeholder to handle LinkedIn posting
   const handlePostButtonClick = () => {};
 
   return (
@@ -29,7 +29,7 @@ const Home = () => {
         />
         <Button
           buttonText="Generate"
-          className="button"
+          className="generate"
           onClick={handleGenerateButtonClick}
         />
       </div>
@@ -40,7 +40,7 @@ const Home = () => {
         />
         <Button
           buttonText="Post on LinkedIn"
-          className="button"
+          className="post"
           onClick={handlePostButtonClick}
         />
       </div>
