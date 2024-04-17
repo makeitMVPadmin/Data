@@ -17,7 +17,6 @@ const Home = () => {
   const handleGenerateButtonClick = () => {
     if (inputText) {
       setPreviewText(inputText);
-      setEditing(!editing);
     } else {
       alert("Please add input!");
     }
