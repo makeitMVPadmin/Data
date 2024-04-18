@@ -7,7 +7,7 @@ import PreviewBox from "../../components/PreviewBox/PreviewBox";
 const Home = () => {
   const [inputText, setInputText] = useState("");
   const [previewText, setPreviewText] = useState("Preview here");
-  const [editing, setEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
@@ -23,11 +23,27 @@ const Home = () => {
   };
 
   const toggleEditing = () => {
-    setEditing(!editing);
+    setIsEditing(!isEditing);
   };
 
   // placeholder to handle LinkedIn posting
   const handlePostButtonClick = () => {};
+
+  const previewContent = () => {
+    return isEditing ? (
+      <InputBox
+        value={previewText}
+        onChange={(e) => setPreviewText(e.target.value)}
+        className="promptpage__preview-box"
+      />
+    ) : (
+      <PreviewBox
+        previewText={previewText}
+        className="promptpage__preview-box"
+        onClickEdit={toggleEditing}
+      />
+    );
+  };
 
   return (
     <div className="promptpage">
@@ -38,31 +54,15 @@ const Home = () => {
           placeholder="Input here"
           className="promptpage__input-box"
         />
-        <Button
-          buttonText="Generate"
-          className="generate"
-          onClick={handleGenerateButtonClick}
-        />
+        <Button className="generate" onClick={handleGenerateButtonClick}>
+          Generate
+        </Button>
       </div>
       <div className="promptpage__preview-container">
-        {editing ? (
-          <InputBox
-            value={previewText}
-            onChange={(e) => setPreviewText(e.target.value)}
-            className="promptpage__preview-box"
-          />
-        ) : (
-          <PreviewBox
-            previewText={previewText}
-            className="promptpage__preview-box"
-            onClickEdit={toggleEditing}
-          />
-        )}
-        <Button
-          buttonText="Post on LinkedIn"
-          className="post"
-          onClick={handlePostButtonClick}
-        />
+        {previewContent()}
+        <Button className="post" onClick={handlePostButtonClick}>
+          Post
+        </Button>
       </div>
     </div>
   );
