@@ -22,8 +22,11 @@ const Home = () => {
 
       const responseContent = await getResponseContent(requestObj);
 
-      // I will rename these, they are the received error or content
-      setAiResponseContent(responseContent.content ? responseContent.content : responseContent)
+      // If responseContent has no content, setAiResponseContent to error message
+      setAiResponseContent(
+        responseContent.content
+          ? responseContent.content
+          : `Error: ${responseContent}`)
     }
     getOpenAIResponse();
   }, [])
