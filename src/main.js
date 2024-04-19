@@ -1,6 +1,5 @@
-import "./HomePage.scss";
 import { useEffect, useState } from 'react';
-import { getResponseContent } from '../../utils/openAIcall';
+import { getResponseContent } from './utils/openAIcall';
 
 // placeholder requestObj, will later be derived from input forms data
 const requestObj = {

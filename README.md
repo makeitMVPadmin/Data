@@ -63,9 +63,6 @@ The project structure is organized as follows:
 │   │   │   ├── Example.jsx
 │   │   │   ├── Example.scss
 │   ├── pages/
-│   │   ├── HomePage/
-│   │   │   ├── HomePage.jsx
-│   │   │   ├── HomePage.scss
 │   │   ├── ...
 │   ├── styles/partials
 │   │   ├── _global.scss
