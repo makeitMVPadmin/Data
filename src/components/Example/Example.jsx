@@ -7,7 +7,6 @@ const Example = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       const members = await getMembers();
-      console.log(members);
       setMembers(members);
     }
 
