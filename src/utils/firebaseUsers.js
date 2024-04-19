@@ -1,11 +1,12 @@
-import {db} from '../Firebase/FirebaseConfig';
+import { db } from '../Firebase/FirebaseConfig';
 import { collection, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc } from 'firebase/firestore';
 
-async function doesUserExist(snapshot) {
-    if (!snapshot.exists()) throw new Error('User not found.');
+async function userExists(id) {
+  const userRef = doc(db, 'Users', id);
+  const userSnapshot = await getDoc(userRef);
+  return userSnapshot.exists(); // returns true or false
 }
 
-// Change 'Users' path to appropriate members path when the collection is created
 async function getUsers() {
   try {
     const usersCollection = collection(db, 'Users');
@@ -19,10 +20,13 @@ async function getUsers() {
 
 async function getUserById(id) {
   try {
+    const exists = await userExists(id)
+    if (!exists) {
+      throw new Error(`User with ID ${id} does not exist`)
+    }
     const userRef = doc(db, 'Users', id);
-    const userSnapshot = await getDoc(userRef);
-    doesUserExist(userSnapshot);
-    return userSnapshot.data();
+    const { data } = await getDoc(userRef);
+    return data;
   } catch (err) {
     throw new Error('Error getting user by ID: ' + err.message);
   }
@@ -46,8 +50,10 @@ async function addUser(user) {
 async function updateUser(id, user, shouldMerge = false) {
   const userRef = doc(db, 'Users', id);
   try {
-    const userSnapshot = await getDoc(userRef);
-    doesUserExist(userSnapshot);
+    const exists = await userExists(id)
+    if (!exists) {
+      throw new Error(`User with ID ${id} does not exist`)
+    }
     await setDoc(userRef, user, { merge: shouldMerge });
   } catch (err) {
     throw new Error('Error updating user: ' + err.message);
@@ -57,8 +63,10 @@ async function updateUser(id, user, shouldMerge = false) {
 async function deleteUser(id) {
   try {
     const userRef = doc(db, 'Users', id);
-    const userSnapshot = await getDoc(userRef);
-    doesUserExist(userSnapshot);
+    const exists = await userExists(id)
+    if (!exists) {
+      throw new Error(`User with ID ${id} does not exist`)
+    }
     await deleteDoc(userRef);
   } catch (err) {
     throw new Error('Error deleting user: ' + err.message);

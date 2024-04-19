@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers } from "../../functions/users";
+import { getUsers } from "../../utils/firebaseUsers";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
