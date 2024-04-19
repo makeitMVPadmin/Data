@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getResponseContent } from './utils/openAIcall';
+import UserList from './components/UserList/UserList';
 
 // placeholder requestObj, will later be derived from input forms data
 const requestObj = {
@@ -35,6 +36,7 @@ const Home = () => {
     <div className="home">
       <h1 className="home__title"> Welcome !</h1>
       <p>{aiResponseContent}</p>
+      {<UserList />}
     </div>
   );
 };
