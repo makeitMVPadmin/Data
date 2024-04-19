@@ -3,32 +3,67 @@ import { useState } from "react";
 import Button from "../../components/Button/Button";
 import InputBox from "../../components/InputBox/InputBox";
 import PreviewBox from "../../components/PreviewBox/PreviewBox";
+import { getResponseContent } from "../../utils/openAIcall";
 
-const Home = () => {
+const requestObj = {
+  messages: [
+    {
+      role: "system",
+      content:
+        "You are a friendly assistant, that gives responses to a community organizer appropriate to LinkedIn in JSON format just post content between 200 and 2000 characters in length, no title. The key should be 'content'. Don't include any extra text outside of the post content itself, including hashtags. Don't say you will create the post, just give me the content",
+    },
+    {
+      role: "user",
+      content: "",
+    },
+  ],
+  model: "gpt-3.5-turbo",
+  temperature: 0.02,
+};
+
+const PromptPage = () => {
   const [inputText, setInputText] = useState("");
   const [previewText, setPreviewText] = useState("Preview here");
   const [isEditing, setIsEditing] = useState(false);
+  const [aiResponseLoading, setAiResponseLoading] = useState("");
+
+  const getOpenAIResponse = async () => {
+    setAiResponseLoading(true);
+    setPreviewText("Loading...");
+    requestObj.messages[1].content = inputText;
+    const responseContent = await getResponseContent(requestObj);
+
+    // need to parse JSON to return an object we can work with
+    const parsedContent = JSON.parse(responseContent.content);
+
+    // If responseContent has no content, setAiResponseContent to error message
+    setPreviewText(
+      parsedContent.content
+        ? parsedContent.content
+        : `Error: ${responseContent}`
+    );
+  };
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
 
-  // placeholder to handle OpenAI request
   const handleGenerateButtonClick = () => {
     if (inputText) {
-      setPreviewText(inputText);
+      getOpenAIResponse();
     } else {
       alert("Please add input!");
     }
   };
 
-  const toggleEditing = () => {
+  const handleToggleEditing = () => {
     setIsEditing(!isEditing);
   };
 
   // placeholder to handle LinkedIn posting
   const handlePostButtonClick = () => {};
 
+  // conditional rendering refactored out of main return statement
   const previewContent = () => {
     return isEditing ? (
       <InputBox
@@ -40,7 +75,7 @@ const Home = () => {
       <PreviewBox
         previewText={previewText}
         className="promptpage__preview-box"
-        onClickEdit={toggleEditing}
+        onClickEdit={handleToggleEditing}
       />
     );
   };
@@ -51,7 +86,7 @@ const Home = () => {
         <InputBox
           value={inputText}
           onChange={handleInputChange}
-          placeholder="Input here"
+          placeholder="Help me write a professional sounding post about my upcoming community event."
           className="promptpage__input-box"
         />
         <Button className="generate" onClick={handleGenerateButtonClick}>
@@ -68,4 +103,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default PromptPage;
