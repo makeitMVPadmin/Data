@@ -2,9 +2,11 @@ import Button from "../Button/Button";
 
 const PreviewBox = ({ className, previewText, onClickEdit }) => {
   return (
-    <div className={className}>
+    <div className={`preview ${className}`}>
       <p>{previewText}</p>
-      <Button className="edit" onClick={onClickEdit} buttonText="Edit" />
+      <Button className="edit" onClick={onClickEdit}>
+        Edit
+      </Button>
     </div>
   );
 };
