@@ -18,7 +18,7 @@ const UserList = () => {
       <h2>Users</h2>
       <ul>
         {users.map(user => (
-          <li style={{ listStyle: 'none' }} key={user.id}>
+          <li style={{ listStyle: 'none' }} key={user.userID}>
             <p>ID: {user.userID}</p>
             <p>Full Name: {user.fullName}</p>
             {user.email && 
