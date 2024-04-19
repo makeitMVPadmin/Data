@@ -1,15 +1,17 @@
 import { db } from '../Firebase/FirebaseConfig';
 import { collection, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc } from 'firebase/firestore';
 
+const USERS_COLLECTION_NAME = 'Users';
+
 async function userExists(id) {
-  const userRef = doc(db, 'Users', id);
+  const userRef = doc(db, USERS_COLLECTION_NAME, id);
   const userSnapshot = await getDoc(userRef);
   return userSnapshot.exists(); // returns true or false
 }
 
 async function getUsers() {
   try {
-    const usersCollection = collection(db, 'Users');
+    const usersCollection = collection(db, USERS_COLLECTION_NAME);
     const usersSnapshot = await getDocs(usersCollection);
     const usersList = usersSnapshot.docs.map(doc => doc.data());
     return usersList;
@@ -24,7 +26,7 @@ async function getUserById(id) {
     if (!exists) {
       throw new Error(`User with ID ${id} does not exist`)
     }
-    const userRef = doc(db, 'Users', id);
+    const userRef = doc(db, USERS_COLLECTION_NAME, id);
     const { data } = await getDoc(userRef);
     return data;
   } catch (err) {
@@ -37,7 +39,7 @@ async function addUser(user) {
     if (!user.fullName || !user.email) {
         throw new Error('User must have a name and an email address.');
     }
-    const { id } = await addDoc(collection(db, 'Users'), user);
+    const { id } = await addDoc(collection(db, USERS_COLLECTION_NAME), user);
     return id;
   } catch (err) {
     throw new Error('Error adding user: ' + err.message);
@@ -48,7 +50,7 @@ async function addUser(user) {
 // If set to true, the user object will be merged with the existing document and will not overwrite any existing fields.
 // If set to false, the user object will overwrite the existing document.
 async function updateUser(id, user, shouldMerge = false) {
-  const userRef = doc(db, 'Users', id);
+  const userRef = doc(db, USERS_COLLECTION_NAME, id);
   try {
     const exists = await userExists(id)
     if (!exists) {
@@ -62,7 +64,7 @@ async function updateUser(id, user, shouldMerge = false) {
 
 async function deleteUser(id) {
   try {
-    const userRef = doc(db, 'Users', id);
+    const userRef = doc(db, USERS_COLLECTION_NAME, id);
     const exists = await userExists(id)
     if (!exists) {
       throw new Error(`User with ID ${id} does not exist`)
