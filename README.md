@@ -62,22 +62,29 @@ The project structure is organized as follows:
 │   │   ├── Example
 │   │   │   ├── Example.jsx
 │   │   │   ├── Example.scss
-│   ├── pages/
+│   ├── Firebase/
+│   │   ├── firebase-config.jsx
 │   │   ├── ...
+│   ├── pages/
+│   │   ├── ExamplePage
+│   │   │   ├── ExamplePage.jsx
+│   │   │   ├── ExamplePage.scss
 │   ├── styles/partials
 │   │   ├── _global.scss
 │   │   ├── _mixins.scss
 │   │   ├── _typography.scss
 │   │   ├── _variables.scss
-│   ├── Firebase/
-│   │   ├── firebase-config.jsx
-│   │   ├── ...
+│   ├── utils
+│   │   ├── _firebaseUsers.js
+│   │   ├── _openAIcall.js
 │   ├── App.js
 │   ├── index.js
+│   ├── main.js
 ├── public/
 │   ├── index.html
 │   ├── ...
 ├── .env
+├── .env.sample
 ├── .gitignore
 ├── package.json
 ├── README.md
