@@ -25,23 +25,26 @@ const PromptPage = () => {
   const [inputText, setInputText] = useState("");
   const [previewText, setPreviewText] = useState("Preview here");
   const [isEditing, setIsEditing] = useState(false);
-  const [aiResponseLoading, setAiResponseLoading] = useState("");
 
   const getOpenAIResponse = async () => {
-    setAiResponseLoading(true);
     setPreviewText("Loading...");
     requestObj.messages[1].content = inputText;
-    const responseContent = await getResponseContent(requestObj);
 
-    // need to parse JSON to return an object we can work with
-    const parsedContent = JSON.parse(responseContent.content);
+    try {
+      const responseContent = await getResponseContent(requestObj);
 
-    // If responseContent has no content, setAiResponseContent to error message
-    setPreviewText(
-      parsedContent.content
-        ? parsedContent.content
-        : `Error: ${responseContent}`
-    );
+      // need to parse JSON to return an object we can work with
+      const parsedContent = JSON.parse(responseContent.content);
+
+      // // If responseContent has no content, setAiResponseContent to error message
+      setPreviewText(
+        parsedContent.content
+          ? parsedContent.content
+          : `Error: ${responseContent}`
+      );
+    } catch (error) {
+      setPreviewText("An error occured. Please try again.");
+    }
   };
 
   const handleInputChange = (e) => {
