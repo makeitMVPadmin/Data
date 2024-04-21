@@ -1,0 +1,21 @@
+.chart {
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &__container {
+        box-sizing: border-box;
+        // width: 400px;
+        // height: 400px;
+    }
+
+    &__yearFilter {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+        padding-left: 20px;
+    }
+}

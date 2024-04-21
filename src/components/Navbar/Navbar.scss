@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+
+
+    &__list {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-right: 40px;
+    }
+
+    &__item {
+        list-style: none;
+        border: 3px solid black;
+        border-radius: 8px 8px 0px 0px;
+        font-size: 40px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    &__item a {
+        text-decoration: none;
+    }
+}
+
