@@ -14,10 +14,25 @@ import useYearRange from "../utils/useYearRange";
 
 const useFetchMemebrs = ({ years }) => {
   const { communityId } = useParams();
-  const [data, setData] = useState([]);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [createdAtStart, createdAtEnd] = useYearRange();
 
-  useEffect(() => {});
+  useEffect(() => {
+    setLoading(true);
+    const fetchUsersWithinYear = async () => {
+      try {
+        const querySnapshot = await db
+          .collection("users")
+          .where("created_at", ">=", createdAtStart)
+          .where("created_at", "<=", createdAtEnd)
+          .get();
+      } catch (err) {}
+    };
+
+    fetchUsersWithinYear();
+  }, []);
+
+  return { members, loading, error };
 };
