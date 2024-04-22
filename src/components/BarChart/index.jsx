@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,7 +21,6 @@ ChartJS.register(
 );
 
 export const BarChart = ({ data }) => {
-    
   const options = {
     plugins: {
       title: {
@@ -43,6 +43,7 @@ export const BarChart = ({ data }) => {
     aspectRatio: 1 | 2,
     scales: {
       x: {
+        
         stacked: true,
         grid: {
           display: false,

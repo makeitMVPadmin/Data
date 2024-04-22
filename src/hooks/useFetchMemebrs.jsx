@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useYearRange from "../utils/useYearRange";
 import membersData from "../data/members.data";
 
 
