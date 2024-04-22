@@ -1,36 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "../firebase-config";
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-  deleteDoc,
-} from "firebase/firestore";
 import useYearRange from "../utils/useYearRange";
+import membersData from "../data/members.data";
 
-const useFetchMemebrs = ({ years }) => {
+
+const useFetchMemebrs = ({ years = 1 }) => {
   const { communityId } = useParams();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [createdAtStart, createdAtEnd] = useYearRange();
+//   const [createdAtStart, createdAtEnd] = useYearRange();
 
   useEffect(() => {
     setLoading(true);
-    const fetchUsersWithinYear = async () => {
-      try {
-        
-      } catch (err) {
 
+    const fetchFakerMembers = async () => {
+      try {
+        const data = await membersData(200);
+        setMembers(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
       }
     };
 
-    fetchUsersWithinYear();
+    fetchFakerMembers();
   }, []);
 
   return { members, loading, error };
 };
+
+export default useFetchMemebrs;

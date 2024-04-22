@@ -1,5 +1,6 @@
 import React from "react";
 import { BarChart } from "../../components/BarChart";
+import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 
 const labels = [
   "Jan",
@@ -43,6 +44,13 @@ export const data = {
 };
 
 const MembersChart = () => {
+  const { members, loading, error } = useFetchMemebrs(1);
+
+  console.log(members);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className="grid grid-cols-1 gap-4 bg-lightBlue">
       <div className="text-3xl font-bold text-black">Members</div>
@@ -77,6 +85,7 @@ const MembersChart = () => {
           </div>
         </div>
       </div>
+      {members.map((item) => (<div key={item.id}>{item.location}</div>))}
     </div>
   );
 };
