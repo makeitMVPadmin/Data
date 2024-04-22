@@ -23,12 +23,10 @@ const useFetchMemebrs = ({ years }) => {
     setLoading(true);
     const fetchUsersWithinYear = async () => {
       try {
-        const querySnapshot = await db
-          .collection("users")
-          .where("created_at", ">=", createdAtStart)
-          .where("created_at", "<=", createdAtEnd)
-          .get();
-      } catch (err) {}
+        
+      } catch (err) {
+
+      }
     };
 
     fetchUsersWithinYear();
