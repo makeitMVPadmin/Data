@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/HomePage/HomePage";
+import Home from "./main.js"
 import PromptPage from "./pages/PromptPage/PromptPage";
 
 function App() {

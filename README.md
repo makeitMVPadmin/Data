@@ -1,7 +1,7 @@
 
-# MakeItMVP Launch Academy Starter Repository
+# MakeItMVP: Communiti Content
 
-Welcome to the MakeItMVP Launch Academy Starter Repository! This repository is designed to provide new junior developers with a structured starting point for their assigned projects. It's built using React and Sass to help you get up and running quickly.
+Welcome to Communiti's social media content generator! Communiti is a community management platform designed oto foster and streamline engagement. This feature is an AI-powered tool for community managers that generates text content for LinkedIn posts based on user input.
 
 ## Table of Contents
 
@@ -13,36 +13,44 @@ Welcome to the MakeItMVP Launch Academy Starter Repository! This repository is d
 
 ## Getting Started
 
-To begin working on your project, follow these steps:
+To begin working on this project, follow these steps:
 
 1. Clone this repository to your local machine:
 
-   ```bash
+   ```
    git clone https://github.com/MakeItMVP/LaunchAcademyStarter.git
    ```
-````
 
 2. Change your working directory to the cloned repository:
 
-   ```bash
-   cd LaunchAcademyStarter
+   ```
+   cd Content
    ```
 
 3. Install the project dependencies:
 
-   ```bash
+   ```
    npm install
    ```
 
-4. Start the development server:
+4. Add your Firebase config values:
 
-   ```bash
+   ```
+   1) Create a .env file in the root directory (do not just rename .env.sample)
+   2) In Firebase, go to the project you want to connect to
+   3) Go to "Project settings"
+   4) Scroll down to "Your apps" and select the app you want to connect to
+   5) Copy each value to your .env file
+   ```
+
+5. Start the development server:
+
+   ```
    npm start
    ```
 
-5. Open your web browser and navigate to `http://localhost:3000` to see your project running.
+6. Open your web browser and navigate to `http://localhost:3000` to see the project running.
 
-Now you're ready to start building your project using the provided structure!
 
 ## Project Structure
 
@@ -51,42 +59,64 @@ The project structure is organized as follows:
 ```
 ├── src/
 │   ├── components/
-│   │   ├── App.js
+│   │   ├── Example
+│   │   │   ├── Example.jsx
+│   │   │   ├── Example.scss
+│   ├── Firebase/
+│   │   ├── firebase-config.jsx
 │   │   ├── ...
-│   ├── styles/
-│   │   ├── main.scss
-│   │   ├── ...
+│   ├── pages/
+│   │   ├── ExamplePage
+│   │   │   ├── ExamplePage.jsx
+│   │   │   ├── ExamplePage.scss
+│   ├── styles/partials
+│   │   ├── _global.scss
+│   │   ├── _mixins.scss
+│   │   ├── _typography.scss
+│   │   ├── _variables.scss
+│   ├── utils
+│   │   ├── _firebaseUsers.js
+│   │   ├── _openAIcall.js
+│   ├── App.js
 │   ├── index.js
+│   ├── main.js
 ├── public/
 │   ├── index.html
 │   ├── ...
+├── .env
+├── .env.sample
+├── .gitignore
 ├── package.json
 ├── README.md
 ```
 
-- `src/`: Contains the main source code for your project, including React components and styles.
-- `public/`: Contains static assets and your project's HTML template.
+- `src/`: Contains the main source code for the project, including React components and styles.
+- `public/`: Contains static assets and the project's HTML template.
 - `package.json`: Defines project dependencies and scripts.
 
-Feel free to customize the project structure to fit your specific project requirements.
 
 ## Technologies
 
-This starter repository uses the following technologies:
+This repository uses the following technologies:
 
 - React: A JavaScript library for building user interfaces.
 - Sass: A CSS extension language that adds features like variables, nesting, and more.
 
-You can expand upon these technologies as needed for your project.
 
 ## Contributing
 
-We welcome contributions from the community. If you have suggestions or improvements for this starter repository, please open an issue or create a pull request. For more information on how to contribute, check our [CONTRIBUTING.md](CONTRIBUTING.md) file.
+We welcome contributions from the community. If you have suggestions or improvements for this repository, please open an issue or create a pull request. 
+
+<!--- 
+TODO: Add CONTRIBUTING file
+
+For more information on how to contribute, stay tuned for our [CONTRIBUTING.md](CONTRIBUTING.md) file. 
+--->
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
 
-```
-
-```
+<!--- 
+TODO: Add LICENSE file
+--->
