@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://gistcdn.githack.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css');
+
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Gilroy, Arial, Helvetica, sans-serif;
 }
 
 a {
