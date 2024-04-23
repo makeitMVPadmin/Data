@@ -86,6 +86,7 @@ const PromptPage = () => {
   return (
     <div className="promptpage">
       <div className="promptpage__input-container">
+        <h1>Test</h1>
         <InputBox
           value={inputText}
           onChange={handleInputChange}
