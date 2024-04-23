@@ -12,8 +12,8 @@ const TotalSummary = ({ title, currentTotal, currentDate, pastTotal }) => {
   };
 
   return (
-    <div className="grid grid-cols-3">
-      <div className="col-span-3 text-xl not-italic font-extrabold text-black">
+    <div className="grid grid-cols-4 text-center">
+      <div className="col-span-2 text-xl not-italic font-extrabold text-black">
         {title}
       </div>
       <div className="col-start-2">
@@ -23,7 +23,7 @@ const TotalSummary = ({ title, currentTotal, currentDate, pastTotal }) => {
         </div>
       </div>
       <div className="">
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           <div className="flex-none">{arrow()}</div>
           <div className="flex-none text-3xl not-italic font-extrabold">{pastTotal}</div>
         </div>
