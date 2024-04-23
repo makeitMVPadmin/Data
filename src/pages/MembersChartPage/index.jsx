@@ -21,7 +21,7 @@ const MembersChart = () => {
       <div>
         <BarChart data={data} />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2">
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-3 bg-lime-500">Total users</div>
           <div className="col-start-2 bg-red-400">
@@ -35,7 +35,7 @@ const MembersChart = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3">
           <div className="col-span-3 bg-lime-500">New users</div>
           <div className="col-start-2 bg-red-400">
             <div>1396</div>

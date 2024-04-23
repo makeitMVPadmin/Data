@@ -59,4 +59,22 @@ const formattedMemebersDataForStackedBarChart = (members) => {
   };
 };
 
-export { formattedMemebersDataForStackedBarChart };
+const totalMembers = () => {
+    const currentMonthTotalMembers = 0;
+    const pastMonthTotalMembers = 0;
+
+    return [currentMonthTotalMembers, pastMonthTotalMembers];
+};
+
+const newMembers = () => {
+    const currentMonthNewMembers = 0;
+    const pastMonthNewMembers = 0;
+
+    return [currentMonthNewMembers, pastMonthNewMembers];
+};
+
+export { 
+    formattedMemebersDataForStackedBarChart, 
+    totalMembers,
+    newMembers,
+};

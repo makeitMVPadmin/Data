@@ -43,7 +43,6 @@ export const BarChart = ({ data }) => {
     aspectRatio: 1 | 2,
     scales: {
       x: {
-        
         stacked: true,
         grid: {
           display: false,
