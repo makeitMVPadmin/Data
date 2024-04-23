@@ -17,7 +17,7 @@ const useResizeChart = (parentRef) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [parentRef]);
 
   return { canvasSize }
 };
