@@ -1,40 +1,40 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState, useCallback } from "react";
+// !!! only for test
 
-// only for test
-const generateUser = () => {
-  const currentDate = new Date();
-  const oneYearAgo = new Date(currentDate);
-  oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
-  const createdAt = faker.date.between({ from: oneYearAgo, to: currentDate });
+// const generateUser = () => {
+//   const currentDate = new Date();
+//   const oneYearAgo = new Date(currentDate);
+//   oneYearAgo.setFullYear(currentDate.getFullYear() - 1);
+//   const createdAt = faker.date.between({ from: oneYearAgo, to: currentDate });
 
-  return {
-    id: faker.string.uuid(),
-    location: `${faker.location.city()}, ${faker.location.state({
-      abbreviated: true,
-    })}`,
-    createdAt: createdAt,
-  };
-};
+//   return {
+//     id: faker.string.uuid(),
+//     location: `${faker.location.city()}, ${faker.location.state({
+//       abbreviated: true,
+//     })}`,
+//     createdAt: createdAt,
+//   };
+// };
 
-const membersData = async (amount = 200) => {
-  return await Promise.all(Array.from({ length: amount }, generateUser));
-};
+// const membersData = async (amount = 200) => {
+//   return await Promise.all(Array.from({ length: amount }, generateUser));
+// };
 
-const membersDataByLocation = async (city, state, amount = 200) => {
-  return new Promise((resolve, reject) => {
-    const data = Array.from({ length: amount }, generateUser).filter(
-      (item) => item.location === `${city}, ${state}`
-    );
-    if (data.length > 0) {
-      resolve(data);
-    } else {
-      reject(new Error("No data found!"));
-    }
-  });
-};
+// const membersDataByLocation = async (city, state, amount = 200) => {
+//   return new Promise((resolve, reject) => {
+//     const data = Array.from({ length: amount }, generateUser).filter(
+//       (item) => item.location === `${city}, ${state}`
+//     );
+//     if (data.length > 0) {
+//       resolve(data);
+//     } else {
+//       reject(new Error("No data found!"));
+//     }
+//   });
+// };
 
-export { membersData, membersDataByLocation };
+// export { membersData, membersDataByLocation };
 
 const useMembersFakeData = (amount = 200) => {
   const generateUser = () => {
@@ -51,6 +51,8 @@ const useMembersFakeData = (amount = 200) => {
       location: `${faker.location.city()}, ${faker.location.state({
         abbreviated: true,
       })}`,
+      industry: faker.person.jobArea(),
+      discipline: faker.person.jobTitle(), 
       createdAt: createdAt,
     };
   };
