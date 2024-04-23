@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button";
 import InputBox from "../../components/InputBox/InputBox";
 import PreviewBox from "../../components/PreviewBox/PreviewBox";
 import { getResponseContent } from "../../utils/openAIcall";
+import PromptHeader from '../../components/PromptHeader/PromptHeader';
 
 const requestObj = {
   messages: [
@@ -86,9 +87,11 @@ const PromptPage = () => {
   return (
     <div className="promptpage">
       <div className="promptpage__container">
+        <PromptHeader headerText={"Content"}/>
         <div className="promptpage__preview-container">
           {previewContent()}
         </div>
+        <PromptHeader headerText={"Use CommitAI To Write Content"} />
         <div className="promptpage__input-container">
           <InputBox
             value={inputText}
