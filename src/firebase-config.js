@@ -1,5 +1,6 @@
+import {} from 'dotenv/config'
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -13,9 +14,16 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
+// const colRef = collection(db, 'Users')
+
+// getDocs(colRef)
+//     .then((snapshot) => {
+//         console.log(snapshot.docs)
+//     })
 
 export { db };
