@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-export const BarChart = ({ data }) => {
+export const StackedBarChart = ({ data }) => {
   const options = {
     plugins: {
       title: {

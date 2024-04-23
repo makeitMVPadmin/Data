@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { BarChart } from "../../components/BarChart";
+import { StackedBarChart } from "../../components/BarChart/StackedBarChart";
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
 import TotalSummary from "../../components/BarChart/TotalSummary";
@@ -26,7 +26,7 @@ import SearchBar from "../../components/SearchBar";
 //   { id: 3, content: "MA" },
 // ];
 
-const MembersChart = () => {
+const MembersCard = () => {
   const { members, loading, error, refetchMembers, fetchCities, fetchStates } =
     useFetchMemebrs(1);
   const selectedCityRef = useRef({});
@@ -37,7 +37,7 @@ const MembersChart = () => {
 
   useEffect(() => {
     fetchCities().then(data => {
-      console.log(data);
+      console.log(data)
       setCities(data);
     });
     fetchStates().then(data => {
@@ -110,7 +110,7 @@ const MembersChart = () => {
         </button>
       </div>
 
-      <BarChart data={data} />
+      <StackedBarChart data={data} />
 
       <div className="grid grid-cols-2">
         {summaries.map((item) => (
@@ -126,4 +126,4 @@ const MembersChart = () => {
     </div>
   );
 };
-export default MembersChart;
+export default MembersCard;
