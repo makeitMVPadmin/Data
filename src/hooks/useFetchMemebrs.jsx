@@ -27,6 +27,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
     const fetchFakerMembers = async () => {
       try {
         const data = await fetchMembersFakeData(200);
+        console.log(data);
         setMembers(data);
         setLoading(false);
       } catch (err) {
@@ -55,7 +56,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
   const fetchCities = useCallback(async () => {
     const data = await fetchCitiesFakeData();
     const uniqueCities = new Set(data);
-    const citiesObjs = Array.from(uniqueCities).sort().map((element, index) => ({
+    const citiesObjs = ["All"].concat(Array.from(uniqueCities).sort()).map((element, index) => ({
       content: element,
       id: index + 1,
     }));
@@ -66,7 +67,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
   const fetchStates = useCallback(async () => {
     const data = await fetchStatesFakeData();
     const uniqueStates = new Set(data);
-    const statesObjs = Array.from(uniqueStates).sort().map((element, index) => ({
+    const statesObjs = ["All"].concat(Array.from(uniqueStates).sort()).map((element, index) => ({
       content: element,
       id: index + 1,
     }));
