@@ -8,6 +8,7 @@ import React, {
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
 import SearchBar from "../../components/SearchBar";
+import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 
 const IndustryCard = () => {
   const { members, loading, error, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs(1);
@@ -72,6 +73,8 @@ const IndustryCard = () => {
           Search
         </button>
       </div>
+
+      <GroupedBarChart />
     </div>
   );
 };
