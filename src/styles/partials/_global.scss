@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 @import url('https://gistcdn.githack.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css');
+@import url('https://fonts.googleapis.com/css2?family=Corben:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Staatliches&display=swap');
 
 * {
   margin: 0;
   padding: 0;
-  font-family: Gilroy, Arial, Helvetica, sans-serif;
+  font-family: Gilroy, Helvetica, sans-serif;
+  font-style: "not-italic"
 }
 
 a {
@@ -18,3 +20,5 @@ html,
 body {
   height: 100vh;
 }
+
+

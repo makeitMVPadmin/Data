@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { BarChart } from "../../components/BarChart";
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
+import TotalSummary from "../../components/BarChart/TotalSummary";
 
 const MembersChart = () => {
   const { members, loading, error } = useFetchMemebrs(1);
@@ -14,39 +15,39 @@ const MembersChart = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
+  const summaries = [
+    {
+      id: 1,
+      title: "Total users",
+      currentTotal: 1394,
+      currentDate: "Apr 14, 2024",
+      pastTotal: 206,
+    },
+    {
+        id: 2,
+        title: "New users",
+        currentTotal: 21,
+        currentDate: "Apr 14, 2024",
+        pastTotal: 32,
+      },
+  ];
+
   return (
     <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div className="text-3xl font-bold text-black">Members</div>
+      <div className="font-['Corben'] text-3xl not-italic font-bold text-black">Members</div>
       <div>Search Bar</div>
-      <div>
-        <BarChart data={data} />
-      </div>
-      <div className="grid grid-cols-2">
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-3 bg-lime-500">Total users</div>
-          <div className="col-start-2 bg-red-400">
-            <div>1396</div>
-            <div>Apr 14, 2024</div>
-          </div>
-          <div className="bg-sky-400">
-            <div>icon</div>
-            <div>206</div>
-            <div>past month</div>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-3">
-          <div className="col-span-3 bg-lime-500">New users</div>
-          <div className="col-start-2 bg-red-400">
-            <div>1396</div>
-            <div>Apr 14, 2024</div>
-          </div>
-          <div className="bg-sky-400">
-            <div>icon</div>
-            <div>206</div>
-            <div>past month</div>
-          </div>
-        </div>
+        <BarChart data={data} />
+
+      <div className="grid grid-cols-2">
+        {summaries.map((item) => (
+          <TotalSummary key={item.id}
+          title={item.title} 
+          currentTotal={item.currentTotal}
+          currentDate={item.currentDate}
+          pastTotal={item.pastTotal}
+          />
+        ))}
       </div>
     </div>
   );

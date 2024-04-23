@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
+import useResizeChart from "../../hooks/useResizeChart";
 
 ChartJS.register(
   CategoryScale,
@@ -54,9 +54,17 @@ export const BarChart = ({ data }) => {
     },
   };
 
+  const parentRef  = useRef(0);
+  const { canvasSize } = useResizeChart(parentRef)
+
   return (
-    <>
-      <Bar options={options} data={data} />;
-    </>
+    <div ref={parentRef}>
+      <Bar
+        options={options}
+        data={data}
+        width={canvasSize.width}
+        redraw
+      />
+    </div>
   );
 };
