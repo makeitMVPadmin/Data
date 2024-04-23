@@ -1,0 +1,7 @@
+@use "../../styles/partials/variables" as *;
+
+.navbar {
+  background-color: $MVP-Light-Blue;
+  display: flex;
+  justify-content: center;
+}
