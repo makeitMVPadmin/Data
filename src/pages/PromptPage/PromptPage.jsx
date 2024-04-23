@@ -64,7 +64,7 @@ const PromptPage = () => {
   };
 
   // placeholder to handle LinkedIn posting
-  const handlePostButtonClick = () => {};
+  const handlePostButtonClick = () => { };
 
   // conditional rendering refactored out of main return statement
   const previewContent = () => {
@@ -85,24 +85,25 @@ const PromptPage = () => {
 
   return (
     <div className="promptpage">
-      <div className="promptpage__input-container">
-        <h1>Test</h1>
-        <InputBox
-          value={inputText}
-          onChange={handleInputChange}
-          placeholder="Help me write a professional sounding post about my upcoming community event."
-          className="promptpage__input-box"
-        />
-        <Button className="generate" onClick={handleGenerateButtonClick}>
-          Generate
-        </Button>
+      <div className="promptpage__container">
+        <div className="promptpage__preview-container">
+          {previewContent()}
+        </div>
+        <div className="promptpage__input-container">
+          <InputBox
+            value={inputText}
+            onChange={handleInputChange}
+            placeholder="Help me write a professional sounding post about my upcoming community event."
+            className="promptpage__input-box"
+          />
+          <Button className="generate" onClick={handleGenerateButtonClick}>
+            Generate
+          </Button>
+        </div>
       </div>
-      <div className="promptpage__preview-container">
-        {previewContent()}
-        <Button className="post" onClick={handlePostButtonClick}>
+      <Button className="post" onClick={handlePostButtonClick}>
           Post
         </Button>
-      </div>
     </div>
   );
 };
