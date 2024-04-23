@@ -1,11 +1,12 @@
+import { initializeApp } from 'firebase/app';
 import { db } from  '../firebase-config.js';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
 async function fetchUsers() {
   const usersCollection = collection(db, 'Users');
   try {
     const snapshot = await getDocs(usersCollection);
-    const usersList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const usersList = snapshot.docs.map(doc => ({...doc.data()}));
     console.log(usersList);
     return usersList;
   } catch (error) {
@@ -15,3 +16,5 @@ async function fetchUsers() {
 }
 
 export default fetchUsers;
+
+fetchUsers()
