@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import UserList from "./components/UserList/UserList";
+import "./styles/partials/_global.scss";
 
 const Home = () => {
   return (
