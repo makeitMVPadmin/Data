@@ -37,7 +37,7 @@ const MembersChart = () => {
 
   useEffect(() => {
     fetchCities().then(data => {
-      console.log(data)
+      console.log(data);
       setCities(data);
     });
     fetchStates().then(data => {
