@@ -1,6 +1,5 @@
-import { initializeApp } from 'firebase/app';
 import { db } from  '../firebase-config.js';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, getDocs} from 'firebase/firestore';
 
 async function fetchUsers() {
   const usersCollection = collection(db, 'Users');
