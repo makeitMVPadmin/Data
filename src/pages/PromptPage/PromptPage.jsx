@@ -89,12 +89,19 @@ const PromptPage = () => {
     <div className="promptpage">
       <NavBar />
       <div className="promptpage__container">
-        <PromptHeader headerText={"Content"}/>
+        <PromptHeader headerText={"Content"} />
         <div className="promptpage__preview-container">
           {previewContent()}
         </div>
         <PromptHeader headerText={"Use CommitAI To Write Content"} />
         <div className="promptpage__input-container">
+          <div className="promptpage__sub-label"><h5>Tone of voice</h5></div>
+          <select>
+            <option>Tone1</option>
+            <option>Tone2</option>
+            <option>Tone3</option>
+          </select>
+          <div className="promptpage__sub-label"><h5>What do you want to share?</h5></div>
           <InputBox
             value={inputText}
             onChange={handleInputChange}
@@ -107,8 +114,8 @@ const PromptPage = () => {
         </div>
       </div>
       <Button className="post" onClick={handlePostButtonClick}>
-          Post
-        </Button>
+        Post
+      </Button>
     </div>
   );
 };
