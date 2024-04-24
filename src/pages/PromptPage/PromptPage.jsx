@@ -113,7 +113,7 @@ const PromptPage = () => {
           </Button>
         </div>
       </div>
-      <Button className="post" onClick={handlePostButtonClick}>
+      <Button className="promptpage__post" onClick={handlePostButtonClick}>
         Post
       </Button>
     </div>
