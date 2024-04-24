@@ -1,7 +1,7 @@
 import { db } from  '../firebase-config.js';
 import { collection, doc, getDoc} from 'firebase/firestore';
 
-async function fetchUsersInCommunity(communityId) {
+async function getCommunityMembers(communityId) {
   // Access the Community collection from Firebase
   const communityDocRef = doc(collection(db, 'Community'), communityId); 
 
@@ -26,7 +26,7 @@ async function fetchUsersInCommunity(communityId) {
 }
 
 // Function takes list of users, recieved from the community table
-async function fetchUserDataForCommunity(listOfUsers) {
+async function getUserDetails(listOfUsers) {
   const usersCollection = collection(db, 'Users');
   const usersList = []
   // for each user id in the array we will pull their data
@@ -62,10 +62,10 @@ async function main(request) {
       const communityId = request['communityId'];
 
       // Await the asynchronous function to get the list of users
-      const listOfUsers = await fetchUsersInCommunity(communityId);
+      const listOfUsers = await getCommunityMembers(communityId);
 
       // Await the asynchronous function to get user data
-      const userData = await fetchUserDataForCommunity(listOfUsers);
+      const userData = await getUserDetails(listOfUsers);
 
       console.log(userData);
       return userData;
