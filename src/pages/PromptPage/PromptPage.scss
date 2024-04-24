@@ -37,7 +37,6 @@
     height: 300px;
     resize: none;
     overflow-y: scroll;
-    background-color: lightgray;
   }
 
   &__preview-box {
@@ -48,6 +47,6 @@
     width: 100%;
     height: 300px;
     overflow-y: scroll;
-    background-color: lightgray;
+    background-color: white;;
   }
 }

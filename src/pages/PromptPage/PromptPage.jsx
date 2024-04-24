@@ -5,6 +5,7 @@ import InputBox from "../../components/InputBox/InputBox";
 import PreviewBox from "../../components/PreviewBox/PreviewBox";
 import { getResponseContent } from "../../utils/openAIcall";
 import PromptHeader from '../../components/PromptHeader/PromptHeader';
+import NavBar from "../../components/NavBar/NavBar";
 
 const requestObj = {
   messages: [
@@ -86,6 +87,7 @@ const PromptPage = () => {
 
   return (
     <div className="promptpage">
+      <NavBar />
       <div className="promptpage__container">
         <PromptHeader headerText={"Content"}/>
         <div className="promptpage__preview-container">
