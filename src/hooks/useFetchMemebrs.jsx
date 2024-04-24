@@ -5,7 +5,7 @@ import useMembersFakeData, {
   membersDataByLocation,
 } from "../data/members.data";
 
-const useFetchMemebrs = ({ years = 1 }) => {
+const useFetchMemebrs = ({years = 1, amount = 200}) => {
   const { communityId } = useParams();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
-  } = useMembersFakeData();
+  } = useMembersFakeData(amount);
   //   const [createdAtStart, createdAtEnd] = useYearRange();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
 
     const fetchFakerMembers = async () => {
       try {
-        const data = await fetchMembersFakeData(200);
+        const data = await fetchMembersFakeData();
         console.log(data);
         setMembers(data);
         setLoading(false);

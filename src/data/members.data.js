@@ -36,7 +36,7 @@ import { useEffect, useState, useCallback } from "react";
 
 // export { membersData, membersDataByLocation };
 
-const useMembersFakeData = (amount = 200) => {
+const useMembersFakeData = (amount=200) => {
   const generateUser = () => {
     const currentDate = new Date();
     const oneYearAgo = new Date(currentDate);
@@ -51,20 +51,18 @@ const useMembersFakeData = (amount = 200) => {
       location: `${faker.location.city()}, ${faker.location.state({
         abbreviated: true,
       })}`,
-      industry: faker.person.jobArea(),
-      discipline: faker.person.jobTitle(), 
+      industry: `Industry ${Math.floor(Math.random() * 20)}`,
+      discipline: `Discipline ${Math.floor(Math.random() * 20)}`,
       createdAt: createdAt,
     };
   };
 
-  const membersData = (amount = 200) => {
+  const membersData = () => {
     return Array.from({ length: amount }, generateUser);
   };
   const [members, setMembers] = useState(membersData());
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   const fetchMembersFakeData = useCallback(async () => {
     return await new Promise((resolve, reject) => {
@@ -76,18 +74,21 @@ const useMembersFakeData = (amount = 200) => {
     });
   }, [members]);
 
-  const fetchMembersFakeDataByLocation = useCallback(async (city, state) => {
-    return new Promise((resolve, reject) => {
-      const data = members.filter(
-        (item) => item.location === `${city}, ${state}`
-      );
-      if (data && data.length > 0) {
-        resolve(data);
-      } else {
-        reject(new Error("No members found!"));
-      }
-    });
-  }, [members]);
+  const fetchMembersFakeDataByLocation = useCallback(
+    async (city, state) => {
+      return new Promise((resolve, reject) => {
+        const data = members.filter(
+          (item) => item.location === `${city}, ${state}`
+        );
+        if (data && data.length > 0) {
+          resolve(data);
+        } else {
+          reject(new Error("No members found!"));
+        }
+      });
+    },
+    [members]
+  );
 
   const fetchCitiesFakeData = useCallback(async () => {
     return new Promise((resolve, reject) => {
@@ -95,7 +96,7 @@ const useMembersFakeData = (amount = 200) => {
         const locationArr = member.location.split(",");
         cities.push(locationArr[0]);
         return cities;
-      },[]);
+      }, []);
       if (cities && cities.length > 0) {
         resolve(cities);
       } else {
@@ -110,21 +111,21 @@ const useMembersFakeData = (amount = 200) => {
         const locationArr = member.location.split(",");
         states.push(locationArr[1].trim());
         return states;
-      },[]);
+      }, []);
       if (states && states.length > 0) {
         resolve(states);
       } else {
         reject(new Error("No states found!"));
       }
     });
-  }, [members]); 
+  }, [members]);
 
   return {
-    fetchMembersFakeData, 
+    fetchMembersFakeData,
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
-  }
+  };
 };
 
 export default useMembersFakeData;

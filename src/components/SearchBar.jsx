@@ -46,7 +46,7 @@ const SearchBar = ({ data, handleSelect }) => {
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 bg-slate-200 text-center">
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-center">
             v
           </Combobox.Button>
         </div>

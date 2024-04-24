@@ -6,12 +6,12 @@ import React, {
   useState,
 } from "react";
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
-import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
+import { formattedMemebersDataForGroupedBarChart } from "../../services/members.services";
 import SearchBar from "../../components/SearchBar";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 
 const IndustryCard = () => {
-  const { members, loading, error, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs(1);
+  const { members, loading, error, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs({amount: 500});
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 
@@ -21,7 +21,6 @@ const IndustryCard = () => {
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
     fetchCities().then((data) => {
-      console.log(data);
       setCities(data);
     });
     fetchStates().then((data) => {
@@ -29,9 +28,11 @@ const IndustryCard = () => {
     });
   }, []);
 
-  const data = useMemo(() => {
-    const data = formattedMemebersDataForStackedBarChart(members);
-    return data;
+  const {data, labels} = useMemo(() => {
+    const {data, labels} = formattedMemebersDataForGroupedBarChart(members);
+    console.log("data:")
+    console.log(data);
+    return {data, labels};
   }, [members]);
 
   const handleSelectCity = useCallback(
@@ -74,7 +75,7 @@ const IndustryCard = () => {
         </button>
       </div>
 
-      <GroupedBarChart />
+      <GroupedBarChart data={data} labels={labels}/>
     </div>
   );
 };

@@ -1,36 +1,27 @@
 import React from "react";
 import Chart from "react-apexcharts";
 
-// series: [{
-//     name: 'Net Profit',
-//     data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-//   }, {
-//     name: 'Revenue',
-//     data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-//   }, {
-//     name: 'Free Cash Flow',
-//     data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-//   }],
-export const GroupedBarChart = (labels) => {
+export const GroupedBarChart = ({data, labels}) => {
+  console.log(data)
   const series = [
     {
-      name: "Net Profit",
+      name: "Discipline 1",
       data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
     },
     {
-      name: "Revenue",
+      name: "Discipline 2",
       data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
     },
     {
-      name: "Free Cash Flow",
+      name: "Discipline 3",
       data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
     },
     {
-      name: "Free Cash Flow",
+      name: "Discipline 4",
       data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
     },
     {
-      name: "Free Cash Flow",
+      name: "Ohters",
       data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
     },
   ];
@@ -53,17 +44,7 @@ export const GroupedBarChart = (labels) => {
       width: 1,
     },
     xaxis: {
-      categories: [
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-      ],
+      categories: labels,
       labels: {
         style: {
           colors: "#000",
@@ -101,7 +82,7 @@ export const GroupedBarChart = (labels) => {
 
   return (
     <>
-      <Chart options={options} series={series} type="bar" height={400} />
+      <Chart options={options} series={data} type="bar" height={400} />
     </>
   );
 };
