@@ -1,0 +1,10 @@
+.tabs-area {
+  background-color: lightgray;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
+
+.tabs-area > * {
+  margin: 1% 10%;
+}
