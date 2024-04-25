@@ -13,7 +13,7 @@ function getRandomInt(min, max) {
 
 const membersGroupbyCreatedAt = (members) => {
     const groupedUsers = members.reduce((groups, user) => {
-        const createdAt = new Date(user.createdAt);
+        const createdAt = new Date(user.createdAt); // !!! should be joinedAt
         const month = createdAt.getMonth() + 1;
         const year = createdAt.getFullYear();
 
@@ -59,14 +59,14 @@ const formattedMemebersDataForStackedBarChart = (members) => {
   };
 };
 
-const totalMembers = () => {
+const totalMembers = (members) => {
     const currentMonthTotalMembers = 0;
     const pastMonthTotalMembers = 0;
 
     return [currentMonthTotalMembers, pastMonthTotalMembers];
 };
 
-const newMembers = () => {
+const newMembers = (members) => {
     const currentMonthNewMembers = 0;
     const pastMonthNewMembers = 0;
 

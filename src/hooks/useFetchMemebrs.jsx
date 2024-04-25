@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import useMembersFakeData, {
-  membersData,
-  membersDataByLocation,
-} from "../data/members.data";
+import useMembersFakeData from "../data/members.data";
 
 const useFetchMemebrs = ({ years = 1 }) => {
   const { communityId } = useParams();
@@ -24,7 +21,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
   useEffect(() => {
     setLoading(true);
 
-    const fetchFakerMembers = async () => {
+    const fetchMembers = async () => {
       try {
         const data = await fetchMembersFakeData(200);
         console.log(data);
@@ -36,7 +33,7 @@ const useFetchMemebrs = ({ years = 1 }) => {
       }
     };
 
-    fetchFakerMembers();
+    fetchMembers();
   }, []);
 
   const refetchMembers = useCallback(
