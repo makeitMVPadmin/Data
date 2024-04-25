@@ -9,7 +9,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 function ExperienceGraph() {
@@ -24,8 +24,8 @@ function ExperienceGraph() {
         {'user': 'Donald', 'experience': 'Senior'},
         {'user': 'Eli', 'experience': 'Senior'},
         {'user': 'Isa', 'experience': 'Senior'},
-        {'user': 'JP', 'experience': 'Expert'},
-        {'user': 'Sabo', 'experience': 'Expert'},
+        {'user': 'JP', 'experience': 'Entry'},
+        {'user': 'Sabo', 'experience': 'Entry'},
         {'user': 'Matt', 'experience': 'Senior'},
         {'user': 'Daniel', 'experience': 'Senior'},
     ];
@@ -35,22 +35,27 @@ function ExperienceGraph() {
         'Learner': '#0954B0',
         'Entry': '#FFD22F',
         'Junior': '#FF7070',
-        'Senior': '#FFF9F4',
-        'Expert': '#52C059'
+        'Senior': '#52C059'
     };
 
-
+    const experienceYearMapping = {
+        'Learner': 'Less than 1 year',
+        'Entry': '1-2 years',     
+        'Junior': '2-3 years',
+        'Senior': 'Over 3 years'
+    };
+      
     // Counting the number of users in each experience category
     const experienceCounts = userExperience.reduce((acc, cur) => {
         acc[cur.experience] = (acc[cur.experience] || 0) + 1;
         return acc;
     }, {});
 
-    // Creating a dataset for each experience category
-    const datasets = Object.keys(experienceCounts).map((experience, index) => {
+    const datasets = Object.keys(experienceCounts).map((experience) => {
         const color = colorMapping[experience] || '#FFFFFF';
+        const experienceLabel = `${experience}\n(${experienceYearMapping[experience] || 'Not specified'})`;  // Adding a line break
         return {
-            label: experience,
+            label: experienceLabel,
             data: [experienceCounts[experience]], // Each dataset has only one data point
             backgroundColor: color,
             borderColor: color.replace('0.6', '1'),
@@ -58,6 +63,7 @@ function ExperienceGraph() {
             barThickness: 45
         };
     });
+    
 
     // Chart data
     const data = {
@@ -69,6 +75,7 @@ function ExperienceGraph() {
     const options = {
         scales: {
             x: {
+                display: false,
                 stacked: true,
                 grid: {
                     display: false
@@ -78,6 +85,7 @@ function ExperienceGraph() {
                 }
             },
             y: {
+                display: false,
                 stacked: true,
                 grid: {
                     display: false
@@ -94,19 +102,38 @@ function ExperienceGraph() {
         plugins: {
             legend: {
                 display: true,
-                position: 'bottom'
+                position: 'bottom',
+                fullWidth: false,
+                labels: {
+                    boxWidth: 10,
+                    padding: 21,
+                    font: {
+                        size: 10
+                    }
+                }
             },
             tooltip: {
                 mode: 'index',
                 intersect: false
+            },
+            title: {
+                display: true,
+                text: 'Experience - Avg',
+                padding: {
+                    top: 10,
+                    bottom: 10
+                },
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                },
+                color: '#333'
             }
         }
     };
 
     return (
-        <div style={{ width: '600px', height: '400px', alignSelf: 'center', justifySelf: 'center' }}>
-            <Bar data={data} options={options} />
-        </div>
+        <Bar className='experienceGraph' data={data} options={options} />
     );
 }
 
