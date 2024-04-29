@@ -1,7 +1,8 @@
-import "./Discipline.scss";
+import "./DisciplinePage.scss";
 import React from "react";
 import DisciplineChart from "../../components/DisciplineCard/DisciplineCard";
 import mockData from "../../data/mockData.json"
+
 
 
 const Discipline = () => {

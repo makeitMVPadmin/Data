@@ -1,14 +1,33 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100%;
+}
 .chart__header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 .chart__container {
-  box-sizing: border-box;
+  flex: 1;
+  height: 170px;
+}
+.chart__container canvas {
+  height: 100% !important;
 }
 .chart__yearFilter {
+  box-sizing: border-box;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 20px;
-  padding-left: 20px;
+  padding: 30px 61px;
+  width: 100%;
+}
+.chart__leftYear {
+  display: flex;
+  flex-direction: row;
 }/*# sourceMappingURL=Discipline.css.map */

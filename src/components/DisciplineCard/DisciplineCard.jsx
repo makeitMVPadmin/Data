@@ -86,9 +86,15 @@ const DisciplineChart = ({ data }) => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'right'
+                position: 'right',
+                align: 'middle', 
+                labels: {
+                  boxWidth: 10,
+                  padding: 20, 
+                }
             }
         }
     };
@@ -101,19 +107,23 @@ const DisciplineChart = ({ data }) => {
             </div>
 
             <div className='chart__yearFilter'>
-                <select value={selectedYear} onChange={handleYearChange}>
-                    <option value="">All Years</option>
-                    {[2020, 2021, 2022, 2023, 2024].map(year => (
-                        <option key={year} value={year}>{year}</option>
-                    ))}
-                </select>
-                <button onClick={() => filterDataByYear(selectedYear)}>Search</button>
+                <div className='chart__leftYear'>
+                    <select value={selectedYear} onChange={handleYearChange}>
+                        <option value="">All Years</option>
+                        {[2020, 2021, 2022, 2023, 2024].map(year => (
+                            <option key={year} value={year}>{year}</option>
+                        ))}
+                    </select>
+                    <button onClick={() => filterDataByYear(selectedYear)}>Search</button>
+                </div>
+
+                <button  onClick={exportPDF}>Export to PDF</button>
             </div>
 
             <div className='chart__container'>
                 <Doughnut data={filteredData} options={options} />
             </div>
-            <button  onClick={exportPDF}>Export to PDF</button>
+            
         </div>
     );
 };

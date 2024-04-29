@@ -8,15 +8,35 @@
         flex-direction: row;
         justify-content: space-between;
         padding-right: 40px;
+        margin-bottom: 0px;
     }
 
     &__item {
+        width: 220px;
+        padding: 16px 0px;
         list-style: none;
         border: 3px solid black;
+        border-bottom: none;
         border-radius: 8px 8px 0px 0px;
-        font-size: 40px;
         font-weight: 800;
         text-decoration: none;
+        color: #000;
+        text-align: center;
+        font-feature-settings: 'clig' off, 'liga' off;
+
+        font-family: Gilroy;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: 115.645%;
+
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        align-self: stretch;
+
+        background-color: #0099FF;
     }
 
     &__item a {
