@@ -1,27 +1,24 @@
 import { db } from  '../firebase-config.js';
-import { collection, doc, getDoc} from 'firebase/firestore';
+import { collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore';
 
 async function getCommunityMembers(communityId) {
-  // Access the Community collection from Firebase
-  const communityDocRef = doc(collection(db, 'Community'), communityId); 
-
   try {
-      // Get the document based on the document reference
-      const community = await getDoc(communityDocRef);
+    // Reference to the collection
+    const communitiesRef = collection(db, 'Communities');
+    // Create a query against the collection looking for the communityId field
+    const q = query(communitiesRef, where("communityId", "==", communityId));
+    const querySnapshot = await getDocs(q);
 
-      // Check if the document exists
-      if (!community.exists()) {
-          console.log('No matching document.');
-          return [];
-      }
-
-      // Assign the 'members' array from the document data to listOfUsers
-      const listOfUsers = community.data().members;
-      console.log(listOfUsers);
-      return listOfUsers;
+    if (querySnapshot.empty) {
+        console.log("No such document!");
+        return []; // Return an empty array or handle as needed
+    } else {
+        const allMembers = querySnapshot.docs.flatMap(doc => doc.data().members || []);
+        return allMembers;
+    }
   } catch (error) {
-      console.error("Failed to fetch users:", error);
-      throw new Error(error.message);
+    console.error("Error in getCommunityMembers:", error);
+    throw error; // Re-throw the error to handle it further up in your call stack
   }
 }
 
@@ -29,10 +26,10 @@ async function getCommunityMembers(communityId) {
 async function getUserDetails(listOfUsers) {
   const usersCollection = collection(db, 'Users');
   const usersList = []
+  
   // for each user id in the array we will pull their data
-  for(const userId of listOfUsers){
+  for(let userId of listOfUsers){
       try {
-
         // pull specific row where user id matches in firebase
         const userDoc = doc(usersCollection, userId)
 
@@ -56,23 +53,25 @@ async function getUserDetails(listOfUsers) {
 }
 
 
-
 async function main(request) {
   try {
-      const communityId = request['communityId'];
+        const communityId = request['communityId'];
+        // const communityId = request.body.communityId
 
-      // Await the asynchronous function to get the list of users
-      const listOfUsers = await getCommunityMembers(communityId);
+        // Await the asynchronous function to get the list of users
+        const listOfUsers = await getCommunityMembers(communityId);
 
-      // Await the asynchronous function to get user data
-      const userData = await getUserDetails(listOfUsers);
+        // Await the asynchronous function to get user data
+        const userData = await getUserDetails(listOfUsers);
 
-      console.log(userData);
-      return userData;
+        return userData;
   } catch (error) {
       console.error("Error in main function:", error);
       throw error;
   }
 }
+
+const request ={communityId: '0000033'}
+main(request)
 
 export default {main};
