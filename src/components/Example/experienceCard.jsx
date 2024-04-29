@@ -12,7 +12,7 @@ ChartJS.register(
   Legend,
 );
 
-function ExperienceGraph() {
+function ExperienceGraph({userData}) {
     const userExperience = [
         {'user': 'Dan', 'experience': 'Learner'},
         {'user': 'Tim', 'experience': 'Learner'},

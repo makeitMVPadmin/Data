@@ -3,12 +3,14 @@ import ExperienceGraph from '../../components/Example/experienceCard';
 import Modal from 'react-modal'; // Import if using react-modal
 import './DashboardPage.scss';
 import {main} from '../../functions/fetchUserData'
+import { useParams } from 'react-router-dom';
 
 Modal.setAppElement('#root'); // Properly hide app content for screen readers
 
 function DashboardPage() {
     const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
     const [userData, setUserData] = useState(null)
+    const { communityId } = useParams();
 
     const openModal = () => {
         setModalIsOpen(true);
@@ -19,7 +21,10 @@ function DashboardPage() {
     };
 
     useEffect(() => {
-        main()
+        if(!communityId) return;
+
+        const request = { communityId }
+        main(request)
             .then(data => {
                 setUserData(data)
                 console.log('User data fetched:', data)
@@ -27,7 +32,7 @@ function DashboardPage() {
             .catch(error => {
                 console.error('Error fetching user data:', error)
             })
-    }, [])
+    }, [communityId])
 
     return (
         <div>
@@ -46,7 +51,7 @@ function DashboardPage() {
                 overlayClassName="modalOverlay"
             >
                 <button onClick={closeModal}>Close</button>
-                <ExperienceGraph />
+                <ExperienceGraph  userData = {userData} />
             </Modal>
         </div>
     );
