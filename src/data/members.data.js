@@ -65,7 +65,7 @@ const useMembersFakeData = (amount=200) => {
   useEffect(() => {}, []);
 
   const fetchMembersFakeData = useCallback(async () => {
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (members && members.length > 0) {
         resolve(members);
       } else {
