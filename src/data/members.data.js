@@ -53,6 +53,9 @@ const useMembersFakeData = (amount=200) => {
       })}`,
       industry: `Industry ${Math.floor(Math.random() * 20)}`,
       discipline: `Discipline ${Math.floor(Math.random() * 20)}`,
+      country: faker.location.country(),
+      state: faker.location.state(),
+      city: faker.location.city(),
       createdAt: createdAt,
     };
   };

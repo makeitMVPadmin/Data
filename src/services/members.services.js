@@ -73,7 +73,6 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
       .sort((a, b) => topIndustries[b] - topIndustries[a])
       .slice(0, 5)
   );
-  console.log("sortedTopIndustries:", sortedTopIndustries);
 
   const usersGroupbyDiscipline = members.reduce((groups, user) => {
     if (!sortedTopIndustries.has(user.industry)) return groups;
@@ -86,7 +85,6 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
     groups[key][user.industry] = (groups[key][user.industry] || 0) + 1;
     return groups;
   }, {});
-  console.log("usersGroupbyDiscipline: ", usersGroupbyDiscipline);
 
   const topDisciplines = Object.keys(usersGroupbyDiscipline)
     .sort(
@@ -95,7 +93,6 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
         Object.keys(usersGroupbyDiscipline[a]).length
     )
     .slice(0, 5);
-  console.log("topDisciplines: ", topDisciplines);
 
   const formattedDisciplinesMap = {};
   for (const discipline of topDisciplines) {
@@ -105,7 +102,6 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
       formattedDisciplinesMap[discipline] = usersGroupbyDiscipline[discipline];
     }
   }
-  console.log("formattedDisciplinesMap: ", formattedDisciplinesMap);
 
   const data = [];
   for (const discipline in formattedDisciplinesMap) {
@@ -119,6 +115,10 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
   const labels = Array.from(sortedTopIndustries);
   return { data, labels };
 };
+
+// formattedMemebersDataForPieChart
+
+
 
 const totalMembers = () => {
     const currentMonthTotalMembers = 0;
