@@ -1,21 +1,25 @@
 import React, { useMemo } from "react";
 import Chart from "react-apexcharts";
 import "./SimplePieChart.scss";
-import { generateColors } from "../../utils/colors.helper";
-
+import {
+  generateColors,
+  generateDynamicColors,
+} from "../../utils/colors.helper";
 
 const SimplePieChart = ({ data, labels }) => {
   const series = [44, 55, 13, 43, 22, 44, 55, 13];
-  
+
   const colors = useMemo(() => {
-    return generateColors(["#0954B0", "#FFD22F", "#52C059", "#FF7070", "#FFF9F4"], series.length);
+    return generateColors(
+      ["#0954B0", "#FFD22F", "#52C059", "#FF7070", "#FFF9F4"],
+      series.length
+    );
   }, [series]);
 
   const options = {
     chart: {
       type: "pie",
       fontFamily: "Gilroy, Helvetica, Arial, sans-serif",
-
     },
     labels: [
       "Team A",
@@ -26,7 +30,6 @@ const SimplePieChart = ({ data, labels }) => {
       "Team F",
       "Team G",
       "Team 8",
-      
     ],
     legend: {
       show: true,
@@ -38,13 +41,13 @@ const SimplePieChart = ({ data, labels }) => {
       fontWeight: 400,
       itemMargin: {
         horizontal: 30,
-        vertical: 10,
+        vertical: 20,
       },
       width: 400,
       markers: {
         shape: "square",
         radius: 0,
-        width: 32, 
+        width: 32,
         height: 32,
       },
     },
@@ -64,11 +67,9 @@ const SimplePieChart = ({ data, labels }) => {
     ],
   };
 
-
-  
   return (
     <div id="simple-pie-container" className="container min-h-96">
-      <Chart options={options} series={series} type="pie" height={400}/>
+      <Chart options={options} series={series} type="pie" height={400} />
     </div>
   );
 };
