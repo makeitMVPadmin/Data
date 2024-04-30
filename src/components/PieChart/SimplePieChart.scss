@@ -1,0 +1,27 @@
+#simple-pie-container {
+    max-height: 400px;
+    align-items: center;
+
+    .apexcharts-svg {
+        div.apexcharts-legend.apx-legend-position-right {
+            width: auto !important;
+            left: 50% !important;
+            display: flex; 
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: center;
+
+            .apexcharts-legend-series {
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+
+        .apexcharts-inner.apexcharts-graphical {
+            width: 400px;
+        }
+    }
+
+}

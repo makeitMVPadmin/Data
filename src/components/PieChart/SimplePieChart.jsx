@@ -1,26 +1,45 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import "./SimplePieChart.scss";
 
 const SimplePieChart = ({ data, labels }) => {
-  const series = [44, 55, 13, 43, 22];
+  const series = [44, 55, 13, 43, 22, 44, 55, 13];
 
   const options = {
     chart: {
-      width: 400,
       type: "pie",
       fontFamily: "Gilroy, Helvetica, Arial, sans-serif",
+
     },
-    labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+    labels: [
+      "Team A",
+      "Team B",
+      "Team C",
+      "Team D",
+      "Team E",
+      "Team A",
+      "Team B",
+      "Team 8",
+      
+    ],
     legend: {
       show: true,
       position: "right",
       horizontalAlign: "left",
-      fontSize: "22px",
+      layout: "horizontal",
+      fontSize: "18px",
       fontFamily: "Gilroy-Bold, Helvetica, Arial",
       fontWeight: 400,
       itemMargin: {
-        horizontal: 100,
+        horizontal: 30,
         vertical: 10,
+      },
+      width: 400,
+      markers: {
+        shape: "square",
+        radius: 0,
+        width: 32, 
+        height: 32,
       },
     },
     colors: ["#0954B0", "#FFD22F", "#52C059", "#FF7070", "#FFF9F4"],
@@ -40,9 +59,9 @@ const SimplePieChart = ({ data, labels }) => {
   };
 
   return (
-    <>
-      <Chart options={options} series={series} type="pie" width={400} />
-    </>
+    <div id="simple-pie-container" className="container min-h-96">
+      <Chart options={options} series={series} type="pie" height={400}/>
+    </div>
   );
 };
 export default SimplePieChart;
