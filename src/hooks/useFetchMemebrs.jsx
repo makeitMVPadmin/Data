@@ -38,6 +38,7 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
 
   const refetchMembers = useCallback(
     async (city, state) => {
+      setLoading(true);
       try {
         const data = await fetchMembersFakeDataByLocation(city, state);
         setMembers(data);
@@ -50,6 +51,9 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
     [setMembers, setLoading, setError, fetchMembersFakeDataByLocation]
   );
 
+
+
+  // has to fetch from db, because search function will refetch members
   const fetchCities = useCallback(async () => {
     const data = await fetchCitiesFakeData();
     const uniqueCities = new Set(data);

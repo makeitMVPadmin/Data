@@ -8,51 +8,46 @@ import React, {
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import SearchBar from "../../components/SearchBar";
 import SimplePieChart from "../../components/PieChart/SimplePieChart";
+import {
+  formattedStatesDataForPieChart,
+  getCountriesFromMembers,
+} from "../../services/members.services";
 
 const LocationCard = () => {
   const { members, loading, error, refetchMembers, fetchCities, fetchStates } =
     useFetchMemebrs({ amount: 500 });
-  const selectedCityRef = useRef({});
-  const selectedStateRef = useRef({});
+  const selectedCountryRef = useRef(null);
 
-  const [cities, setCities] = useState([]);
-  const [states, setStates] = useState([]);
+  //   const [countries, setCountries] = useState([]);
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
-  useEffect(() => {
-    fetchCities().then((data) => {
-      setCities(data);
-    });
-    fetchStates().then((data) => {
-      setStates(data);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
-//   const { data, labels } = useMemo(() => {
-//     const { data, labels } = formattedMemebersDataForPieChart(members);
-//     return { data, labels };
-//   }, [members]);
+  const { data, stateLabels, countries } = useMemo(() => {
+    const countries = getCountriesFromMembers(members);
+    const { data, stateLabels } = formattedStatesDataForPieChart(
+      countries.length > 0 ? countries[0].content : "",
+      members
+    );
+    console.log("countries: ", countries);
+    console.log("data: ", data);
+    console.log("labels: ", stateLabels);
+    return { data, stateLabels, countries };
+  }, [members]);
 
-  const handleSelectCity = useCallback(
-    (cityItem) => {
-      selectedCityRef.current = cityItem;
+  const handleSelectCountry = useCallback(
+    (country) => {
+      selectedCountryRef.current = country;
     },
-    [selectedCityRef]
-  );
-
-  const handleSelectState = useCallback(
-    (stateItem) => {
-      selectedStateRef.current = stateItem;
-    },
-    [selectedStateRef]
+    [selectedCountryRef]
   );
 
   const handleSearch = useCallback(() => {
     refetchMembers(
-      selectedCityRef.current.content,
-      selectedStateRef.current.content
+      selectedCountryRef.current.content,
+      selectedCountryRef.current.content
     );
-  }, [selectedCityRef, selectedStateRef, refetchMembers]);
+  }, [selectedCountryRef, selectedCountryRef, refetchMembers]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -63,7 +58,7 @@ const LocationCard = () => {
         Industry
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
-        <SearchBar data={cities} handleSelect={handleSelectCity} />
+        <SearchBar data={countries} handleSelect={handleSelectCountry} />
         <button
           className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
           onClick={handleSearch}
@@ -72,7 +67,7 @@ const LocationCard = () => {
         </button>
       </div>
 
-      <SimplePieChart  />
+      <SimplePieChart data={data} labels={stateLabels} />
     </div>
   );
 };

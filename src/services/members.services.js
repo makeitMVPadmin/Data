@@ -5,10 +5,10 @@ function getRandomInt(min, max) {
 }
 
 const membersGroupbyCreatedAt = (members) => {
-    const groupedUsers = members.reduce((groups, user) => {
-        const createdAt = new Date(user.createdAt);
-        const month = createdAt.getMonth() + 1;
-        const year = createdAt.getFullYear();
+  const groupedUsers = members.reduce((groups, user) => {
+    const createdAt = new Date(user.createdAt);
+    const month = createdAt.getMonth() + 1;
+    const year = createdAt.getFullYear();
 
     const key = `${year}-${month}`;
     if (!groups[key]) {
@@ -53,14 +53,7 @@ const formattedMemebersDataForStackedBarChart = (members) => {
   };
 };
 
-// {
-//   name: "Discipline 1",
-//   data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
-// },
-// {
-//   name: "Discipline 2",
-//   data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-// },
+// too many loops, probably refine it later
 const formattedMemebersDataForGroupedBarChart = (members) => {
   const topIndustries = members.reduce((groups, user) => {
     const key = user.industry;
@@ -116,20 +109,53 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
   return { data, labels };
 };
 
-// formattedMemebersDataForPieChart
+function getCountriesFromMembers(members) {
+  const countries = members.reduce((group, user) => {
+    const country = user.country;
+    if (country) group.add(country);
+    return group;
+  }, new Set());
 
+  return Array.from(countries).sort().map((element, index) => ({
+    content: element,
+    id: index + 1,
+  }));
+}
 
+function formattedStatesDataForPieChart(country, members) {
+  const filteredMembers = members.filter((user) => user.country === country);
+  const hash = filteredMembers.reduce((group, user) => {
+    const key = user.state;
+    if (!group[key]) {
+      group[key] = { count: 0, users: [] };
+    }
+
+    group[key].count += 1;
+    group[key].users.push(user);
+
+    return group;
+  }, {});
+
+  const stateLabels = Object.keys(hash).sort();
+
+  const data = [];
+  for (const state of stateLabels) {
+    data.push(hash[state].count);
+  }
+
+  return { data, stateLabels };
+}
 
 const totalMembers = () => {
-    const currentMonthTotalMembers = 0;
-    const pastMonthTotalMembers = 0;
+  const currentMonthTotalMembers = 0;
+  const pastMonthTotalMembers = 0;
 
   return [currentMonthTotalMembers, pastMonthTotalMembers];
 };
 
 const newMembers = () => {
-    const currentMonthNewMembers = 0;
-    const pastMonthNewMembers = 0;
+  const currentMonthNewMembers = 0;
+  const pastMonthNewMembers = 0;
 
   return [currentMonthNewMembers, pastMonthNewMembers];
 };
@@ -137,6 +163,8 @@ const newMembers = () => {
 export {
   formattedMemebersDataForStackedBarChart,
   formattedMemebersDataForGroupedBarChart,
+  getCountriesFromMembers,
+  formattedStatesDataForPieChart,
   totalMembers,
   newMembers,
 };
