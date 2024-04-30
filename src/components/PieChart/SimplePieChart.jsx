@@ -3,16 +3,21 @@ import Chart from "react-apexcharts";
 import "./SimplePieChart.scss";
 import {
   generateColors,
-  generateDynamicColors,
+  generateDynamicColors
 } from "../../utils/colors.helper";
 
 const SimplePieChart = ({ data, labels }) => {
   const series = [44, 55, 13, 43, 22, 44, 55, 13];
 
   const colors = useMemo(() => {
-    return generateColors(
+    return generateDynamicColors(
       ["#0954B0", "#FFD22F", "#52C059", "#FF7070", "#FFF9F4"],
-      series.length
+      series.length,
+      {
+        hueShift: 20,
+        lightnessRange: [0.5, 0.8],
+        saturationRange: [0.5, 1],
+      }
     );
   }, [series]);
 

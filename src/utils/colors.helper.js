@@ -21,7 +21,7 @@ const generateDynamicColors = (baseColors, count, options = {}) => {
   } = options;
 
   const colors = [];
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < count-baseColors.length; i++) {
     const baseColorIndex = i % baseColors.length;
     const baseColor = baseColors[baseColorIndex];
     const color = chroma(baseColor)
@@ -39,7 +39,7 @@ const generateDynamicColors = (baseColors, count, options = {}) => {
       .hex();
     colors.push(color);
   }
-  return colors;
+  return baseColors.concat(colors);
 };
 
 export { generateColors, generateDynamicColors };
