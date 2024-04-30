@@ -64,7 +64,6 @@ const LocationCard = () => {
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
         <SearchBar data={cities} handleSelect={handleSelectCity} />
-        <SearchBar data={states} handleSelect={handleSelectState} />
         <button
           className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
           onClick={handleSearch}
