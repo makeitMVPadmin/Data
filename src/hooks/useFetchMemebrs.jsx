@@ -9,12 +9,14 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
   const [error, setError] = useState(null);
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
+  const [countries, setCountries] = useState([]);
 
   const {
     fetchMembersFakeData,
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
+    fetchCountriesFakeData
   } = useMembersFakeData(amount);
   //   const [createdAtStart, createdAtEnd] = useYearRange();
 
@@ -96,8 +98,27 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
     },
     [setStates, fetchStatesFakeData]
   );
+  const fetchCountries = useCallback(
+    async () => {
+      setLoading(true);
+      try {
+        const data = await fetchCountriesFakeData();
+        const uniqueCountries = Array.from(new Set(data)).sort();
+        const countriesObjs = uniqueCountries.map((element, index) => ({
+            content: element,
+            id: index + 1,
+          }));
+        setCountries(countriesObjs);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    },
+    [setCountries, fetchCountriesFakeData]
+  );
 
-  return { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates };
+  return { members, loading, error, cities, states, countries, refetchMembers, fetchCities, fetchStates, fetchCountries };
 };
 
 export default useFetchMemebrs;

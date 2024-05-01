@@ -14,17 +14,18 @@ import {
 } from "../../services/members.services";
 
 const LocationCard = () => {
-  const { members, loading, error, refetchMembers, fetchCities, fetchStates } =
+  const { members, loading, error, countries, refetchMembers, fetchCountries } =
     useFetchMemebrs({ amount: 500 });
   const selectedCountryRef = useRef(null);
 
   //   const [countries, setCountries] = useState([]);
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
-  const { data, stateLabels, countries } = useMemo(() => {
-    const countries = getCountriesFromMembers(members);
+  const { data, stateLabels } = useMemo(() => {
     const { data, stateLabels } = formattedStatesDataForPieChart(
       countries.length > 0 ? countries[0].content : "",
       members
@@ -32,8 +33,8 @@ const LocationCard = () => {
     console.log("countries: ", countries);
     console.log("data: ", data);
     console.log("labels: ", stateLabels);
-    return { data, stateLabels, countries };
-  }, [members]);
+    return { data, stateLabels };
+  }, [members, countries]);
 
   const handleSelectCountry = useCallback(
     (country) => {
@@ -45,9 +46,8 @@ const LocationCard = () => {
   const handleSearch = useCallback(() => {
     refetchMembers(
       selectedCountryRef.current.content,
-      selectedCountryRef.current.content
     );
-  }, [selectedCountryRef, selectedCountryRef, refetchMembers]);
+  }, [selectedCountryRef, refetchMembers]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

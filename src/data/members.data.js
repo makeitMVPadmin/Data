@@ -123,11 +123,26 @@ const useMembersFakeData = (amount=200) => {
     });
   }, [members]);
 
+  const fetchCountriesFakeData = useCallback(async () => {
+    return new Promise((resolve, reject) => {
+      const countries = members.reduce((countries, member) => {
+        countries.push(member.country);
+        return countries;
+      }, []);
+      if (countries && countries.length > 0) {
+        resolve(countries);
+      } else {
+        reject(new Error("No states found!"));
+      }
+    })
+  }, [members])
+
   return {
     fetchMembersFakeData,
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
+    fetchCountriesFakeData
   };
 };
 
