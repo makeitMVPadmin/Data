@@ -66,10 +66,13 @@ const IndustryCard = () => {
           city,
           state,
         };
-        refetchMembers(query);
+      } else {
+        setSelectCity(cities[0]);
+        setSelectState(states[0]);
       }
+      refetchMembers(query);
     },
-    [refetchMembers]
+    [refetchMembers, cities, states]
   );
 
   const renderChart = useMemo(() => {
