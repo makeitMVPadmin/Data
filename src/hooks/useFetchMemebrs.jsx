@@ -50,7 +50,7 @@ const useFetchMemebrs = ({ years = 1, amount = 200 }) => {
         setLoading(false);
       }
     },
-    [setMembers, setLoading, setError, fetchMembersFakeDataByLocation]
+    [setMembers, fetchMembersFakeDataByLocation]
   );
 
   // has to fetch from db, because search function will refetch members

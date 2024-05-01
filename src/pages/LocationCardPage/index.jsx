@@ -9,8 +9,7 @@ import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import SearchBar from "../../components/SearchBar";
 import SimplePieChart from "../../components/PieChart/SimplePieChart";
 import {
-  formattedStatesDataForPieChart,
-  getCountriesFromMembers,
+  formattedStatesDataForPieChart
 } from "../../services/members.services";
 
 const LocationCard = () => {
