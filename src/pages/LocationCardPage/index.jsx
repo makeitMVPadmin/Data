@@ -29,9 +29,6 @@ const LocationCard = () => {
       countries.length > 0 ? countries[0].content : "",
       members
     );
-    console.log("countries: ", countries);
-    console.log("data: ", data);
-    console.log("labels: ", stateLabels);
     return { data, stateLabels };
   }, [members, countries]);
 

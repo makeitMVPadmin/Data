@@ -66,7 +66,6 @@ const useFetchMemebrs = ({ years = 1, amount = 200 }) => {
           id: index + 1,
         }));
         setCities(citiesObjs);
-        console.log("citiesObjs: ", uniqueCities);
         setLoading(false);
       } catch (err) {
         setError(err);
