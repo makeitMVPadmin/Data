@@ -40,10 +40,20 @@ const MembersCard = () => {
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 
+  const [selectedCity, setSelectCity] = useState({});
+  const [selectedState, setSelectState] = useState({});
+
   useEffect(() => {
     fetchCities();
     fetchStates();
   }, []);
+
+  useEffect(() => {
+    setSelectCity(cities[0]);
+  }, [cities]);
+  useEffect(() => {
+    setSelectState(states[0]);
+  }, [states]);
 
   const data = useMemo(() => {
     const data = formattedMemebersDataForStackedBarChart(members);
@@ -52,26 +62,38 @@ const MembersCard = () => {
 
   const handleSelectCity = useCallback(
     (cityItem) => {
-      selectedCityRef.current = cityItem;
+      setSelectCity(cityItem);
     },
-    [selectedCityRef]
+    [setSelectCity]
   );
 
   const handleSelectState = useCallback(
     (stateItem) => {
-      selectedStateRef.current = stateItem;
+      setSelectState(stateItem);
     },
-    [selectedStateRef]
+    [setSelectState]
   );
 
-  const handleSearch = useCallback(() => {
-    const city = selectedCityRef.current.content;
-    const state = selectedStateRef.current.content;
-    refetchMembers({
-      city,
-      state,
-    });
-  }, [selectedCityRef, selectedStateRef, refetchMembers]);
+  const handleSearch = useCallback(
+    (city, state) => {
+      // const city = selectedCity.content;
+      // const state = selectedState.content;
+      console.log("handleSearch");
+      let query = {};
+      if ((city !== "All") & (state !== "All")) {
+        query = {
+          city,
+          state,
+        };
+        refetchMembers(query);
+      }
+    },
+    [refetchMembers]
+  );
+
+  const renderChart = useMemo(() => {
+    return <StackedBarChart data={data} />;
+  }, [data]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -99,17 +121,31 @@ const MembersCard = () => {
         Members
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
-        <SearchBar data={cities} handleSelect={handleSelectCity} />
-        <SearchBar data={states} handleSelect={handleSelectState} />
+        {selectedCity && (
+          <SearchBar
+            data={cities}
+            handleSelect={handleSelectCity}
+            value={selectedCity}
+          />
+        )}
+        {selectedState && (
+          <SearchBar
+            data={states}
+            handleSelect={handleSelectState}
+            value={selectedState}
+          />
+        )}
         <button
           className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
-          onClick={handleSearch}
+          onClick={() =>
+            handleSearch(selectedCity.content, selectedState.content)
+          }
         >
           Search
         </button>
       </div>
 
-      <StackedBarChart data={data} />
+      {renderChart}
 
       <div className="grid grid-cols-2">
         {summaries.map((item) => (

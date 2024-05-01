@@ -15,7 +15,7 @@ const LocationCard = () => {
     useFetchMemebrs({ amount: 500 });
   const selectedCountryRef = useRef(countries[0]);
 
-  const [selectedCountry, setSelectedCountry] = useState({ content: "" });
+  const [selectedCountry, setSelectedCountry] = useState({});
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
@@ -53,11 +53,14 @@ const LocationCard = () => {
   const handleSearch = useCallback(
     (country) => {
       // const country = selectedCountry;
-      console.log(country);
       refetchMembers({ country });
     },
     [refetchMembers]
   );
+
+  const renderChart = useMemo(() => {
+    return <SimplePieChart data={data} labels={stateLabels} />
+  }, [data, stateLabels]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -68,7 +71,7 @@ const LocationCard = () => {
         Industry
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
-        <SearchBar data={countries} handleSelect={handleSelectCountry} value={countries[0]}/>
+        {selectedCountry && <SearchBar data={countries} handleSelect={handleSelectCountry} value={selectedCountry}/>}
         <button
           className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
           onClick={() => handleSearch(selectedCountry.content)}
@@ -77,7 +80,8 @@ const LocationCard = () => {
         </button>
       </div>
 
-      <SimplePieChart data={data} labels={stateLabels} />
+      {/* <SimplePieChart data={data} labels={stateLabels} /> */}
+      {renderChart}
     </div>
   );
 };

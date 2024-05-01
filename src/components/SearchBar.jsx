@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Combobox } from "@headlessui/react";
 
 // {
@@ -6,7 +6,8 @@ import { Combobox } from "@headlessui/react";
 //   content: ""
 // }
 const SearchBar = ({ data, handleSelect, value }) => {
-  const [selectedItem, setSelectedItem] = useState(data[0]);
+  console.log("searchbar rendering: ", value)
+  const [selectedItem, setSelectedItem] = useState(value);
   const [query, setQuery] = useState("");
 
   const filteredData =

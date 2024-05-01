@@ -29,9 +29,6 @@ const formattedMemebersDataForStackedBarChart = (members) => {
     (a, b) => new Date(a) - new Date(b)
   );
 
-  console.log(aggregatedMembers);
-  console.log(monthsSortedbyDate);
-
   return {
     labels: monthsSortedbyDate,
     datasets: [

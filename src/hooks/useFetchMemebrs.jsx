@@ -40,9 +40,16 @@ const useFetchMemebrs = ({ years = 1, amount = 200 }) => {
 
   const refetchMembers = useCallback(
     async ({city, state, country}) => {
+      console.log("searching... ", city, state, country);
       setLoading(true);
       try {
-        const data = await fetchMembersFakeDataByLocation({city, state, country});
+        let data = [];
+        if (city === "All" || state === "All" || country === "All") {
+          data = await fetchMembersFakeDataByLocation({});
+        } else {
+          data = await fetchMembersFakeDataByLocation({city, state, country});
+        }
+
         setMembers(data);
         setLoading(false);
       } catch (err) {

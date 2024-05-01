@@ -83,7 +83,7 @@ const useMembersFakeData = (amount = 200) => {
         // const data = members.filter(
         //   (item) => item.location === `${city}, ${state}`
         // );
-
+        console.log("fetching members by location...")
         const data = members.filter((user) => {
           if (
             (!city || user.city.toLowerCase() === city.toLowerCase()) &&
