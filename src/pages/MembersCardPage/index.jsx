@@ -27,23 +27,14 @@ import SearchBar from "../../components/SearchBar";
 // ];
 
 const MembersCard = () => {
-  const { members, loading, error, refetchMembers, fetchCities, fetchStates } =
+  const { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates } =
     useFetchMemebrs({});
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 
-  const [cities, setCities] = useState([]);
-  const [states, setStates] = useState([]);
-
   useEffect(() => {
-    fetchCities().then(data => {
-      console.log(data)
-      setCities(data);
-    });
-    fetchStates().then(data => {
-      setStates(data);
-    })
-
+    fetchCities();
+    fetchStates();
   }, []);
 
   const data = useMemo(() => {

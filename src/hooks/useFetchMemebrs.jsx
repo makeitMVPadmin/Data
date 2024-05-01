@@ -54,29 +54,50 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
 
 
   // has to fetch from db, because search function will refetch members
-  const fetchCities = useCallback(async () => {
-    const data = await fetchCitiesFakeData();
-    const uniqueCities = new Set(data);
-    const citiesObjs = ["All"].concat(Array.from(uniqueCities).sort()).map((element, index) => ({
-      content: element,
-      id: index + 1,
-    }));
-    setCities(citiesObjs);
-    return citiesObjs;
-  }, [setCities, fetchCitiesFakeData]);
+  const fetchCities = useCallback(
+    async (withAll = true) => {
+      setLoading(true);
+      try {
+        const data = await fetchCitiesFakeData();
+        const all = withAll ? ["All"] : [];
+        const uniqueCities = all.concat(Array.from(new Set(data)).sort());
+        const citiesObjs = uniqueCities.map((element, index) => ({
+            content: element,
+            id: index + 1,
+          }));
+        setCities(citiesObjs);
+        console.log("citiesObjs: ", uniqueCities)
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    },
+    [setCities, fetchCitiesFakeData]
+  );
 
-  const fetchStates = useCallback(async () => {
-    const data = await fetchStatesFakeData();
-    const uniqueStates = new Set(data);
-    const statesObjs = ["All"].concat(Array.from(uniqueStates).sort()).map((element, index) => ({
-      content: element,
-      id: index + 1,
-    }));
-    setStates(statesObjs);
-    return statesObjs;
-  }, [setStates, fetchStatesFakeData]);
+  const fetchStates = useCallback(
+    async (withAll = true) => {
+      setLoading(true);
+      try {
+        const data = await fetchStatesFakeData();
+        const all = withAll ? ["All"] : [];
+        const uniqueStates = all.concat(Array.from(new Set(data)).sort());
+        const statesObjs = uniqueStates.map((element, index) => ({
+            content: element,
+            id: index + 1,
+          }));
+        setStates(statesObjs);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    },
+    [setStates, fetchStatesFakeData]
+  );
 
-  return { members, loading, error, refetchMembers, fetchCities, fetchStates };
+  return { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates };
 };
 
 export default useFetchMemebrs;

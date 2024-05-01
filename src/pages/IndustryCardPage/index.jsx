@@ -11,21 +11,14 @@ import SearchBar from "../../components/SearchBar";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 
 const IndustryCard = () => {
-  const { members, loading, error, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs({amount: 500});
+  const { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs({amount: 500});
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 
-  const [cities, setCities] = useState([]);
-  const [states, setStates] = useState([]);
-
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
-    fetchCities().then((data) => {
-      setCities(data);
-    });
-    fetchStates().then((data) => {
-      setStates(data);
-    });
+    fetchCities()
+    fetchStates()
   }, []);
 
   const {data, labels} = useMemo(() => {
