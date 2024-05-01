@@ -1,12 +1,11 @@
 import { Fragment, useCallback, useState } from "react";
 import { Combobox } from "@headlessui/react";
 
-
 // {
 //   id: 0,
 //   content: ""
 // }
-const SearchBar = ({ data, handleSelect }) => {
+const SearchBar = ({ data, handleSelect, value }) => {
   const [selectedItem, setSelectedItem] = useState(data[0]);
   const [query, setQuery] = useState("");
 
@@ -40,7 +39,7 @@ const SearchBar = ({ data, handleSelect }) => {
     <Combobox
       value={selectedItem}
       onChange={handleValueChange}
-      open={selectedItem === "" ? true : false}
+      open={selectedItem ? true : false}
     >
       <div className="relative">
         <div>

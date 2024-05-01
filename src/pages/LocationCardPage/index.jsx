@@ -8,40 +8,56 @@ import React, {
 import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import SearchBar from "../../components/SearchBar";
 import SimplePieChart from "../../components/PieChart/SimplePieChart";
-import {
-  formattedStatesDataForPieChart
-} from "../../services/members.services";
+import { formattedStatesDataForPieChart } from "../../services/members.services";
 
 const LocationCard = () => {
   const { members, loading, error, countries, refetchMembers, fetchCountries } =
     useFetchMemebrs({ amount: 500 });
-  const selectedCountryRef = useRef(null);
+  const selectedCountryRef = useRef(countries[0]);
 
-  //   const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({ content: "" });
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
     fetchCountries();
   }, []);
+  useEffect(() => {
+    setSelectedCountry(countries[0]);
+  }, [countries]);
 
   const { data, stateLabels } = useMemo(() => {
+    let country = "";
+    if (selectedCountry) {
+      country = selectedCountry.content;
+    } else if (countries[0]) {
+      country = countries[0].content;
+    } else {
+      country = "";
+    }
+
     const { data, stateLabels } = formattedStatesDataForPieChart(
-      countries.length > 0 ? countries[0].content : "",
+      country,
       members
     );
+
     return { data, stateLabels };
   }, [members, countries]);
 
   const handleSelectCountry = useCallback(
     (country) => {
-      selectedCountryRef.current = country;
+      setSelectedCountry(country);
     },
-    [selectedCountryRef]
+    [setSelectedCountry]
   );
 
-  const handleSearch = useCallback(() => {
-    refetchMembers(selectedCountryRef.current.content);
-  }, [selectedCountryRef, refetchMembers]);
+  const handleSearch = useCallback(
+    (country) => {
+      // const country = selectedCountry;
+      console.log(country);
+      refetchMembers({ country });
+    },
+    [refetchMembers]
+  );
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -52,10 +68,10 @@ const LocationCard = () => {
         Industry
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
-        <SearchBar data={countries} handleSelect={handleSelectCountry} />
+        <SearchBar data={countries} handleSelect={handleSelectCountry} value={countries[0]}/>
         <button
           className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
-          onClick={handleSearch}
+          onClick={() => handleSearch(selectedCountry.content)}
         >
           Search
         </button>

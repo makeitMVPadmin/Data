@@ -78,11 +78,22 @@ const useMembersFakeData = (amount = 200) => {
   }, [members]);
 
   const fetchMembersFakeDataByLocation = useCallback(
-    async (city, state) => {
+    async ({city, state, country}) => {
       return new Promise((resolve, reject) => {
-        const data = members.filter(
-          (item) => item.location === `${city}, ${state}`
-        );
+        // const data = members.filter(
+        //   (item) => item.location === `${city}, ${state}`
+        // );
+
+        const data = members.filter((user) => {
+          if (
+            (!city || user.city.toLowerCase() === city.toLowerCase()) &&
+            (!state || user.state.toLowerCase() === state.toLowerCase()) &&
+            (!country || user.country.toLowerCase() === country.toLowerCase())
+          ) {
+            return true;
+          }
+          return false;
+        });
         if (data && data.length > 0) {
           resolve(data);
         } else {
@@ -96,8 +107,9 @@ const useMembersFakeData = (amount = 200) => {
   const fetchCitiesFakeData = useCallback(async () => {
     return new Promise((resolve, reject) => {
       const cities = members.reduce((cities, member) => {
-        const locationArr = member.location.split(",");
-        cities.push(locationArr[0]);
+        // const locationArr = member.location.split(",");
+        // cities.push(locationArr[0]);
+        cities.push(member.city);
         return cities;
       }, []);
       if (cities && cities.length > 0) {
@@ -111,8 +123,9 @@ const useMembersFakeData = (amount = 200) => {
   const fetchStatesFakeData = useCallback(async () => {
     return new Promise((resolve, reject) => {
       const states = members.reduce((states, member) => {
-        const locationArr = member.location.split(",");
-        states.push(locationArr[1].trim());
+        // const locationArr = member.location.split(",");
+        // states.push(locationArr[1].trim());
+        states.push(member.state);
         return states;
       }, []);
       if (states && states.length > 0) {

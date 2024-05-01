@@ -39,10 +39,10 @@ const useFetchMemebrs = ({ years = 1, amount = 200 }) => {
   }, []);
 
   const refetchMembers = useCallback(
-    async (city, state) => {
+    async ({city, state, country}) => {
       setLoading(true);
       try {
-        const data = await fetchMembersFakeDataByLocation(city, state);
+        const data = await fetchMembersFakeDataByLocation({city, state, country});
         setMembers(data);
         setLoading(false);
       } catch (err) {

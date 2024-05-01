@@ -65,12 +65,12 @@ const MembersCard = () => {
   );
 
   const handleSearch = useCallback(() => {
-    console.log(selectedCityRef);
-    console.log(selectedStateRef);
-    refetchMembers(
-      selectedCityRef.current.content,
-      selectedStateRef.current.content
-    );
+    const city = selectedCityRef.current.content;
+    const state = selectedStateRef.current.content;
+    refetchMembers({
+      city,
+      state,
+    });
   }, [selectedCityRef, selectedStateRef, refetchMembers]);
 
   if (loading) return <div>Loading...</div>;
