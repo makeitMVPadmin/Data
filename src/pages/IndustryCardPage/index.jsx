@@ -11,21 +11,30 @@ import SearchBar from "../../components/SearchBar";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 
 const IndustryCard = () => {
-  const { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates } = useFetchMemebrs({amount: 500});
+  const {
+    members,
+    loading,
+    error,
+    cities,
+    states,
+    refetchMembers,
+    fetchCities,
+    fetchStates,
+  } = useFetchMemebrs({ amount: 500 });
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
-    fetchCities()
-    fetchStates()
+    fetchCities();
+    fetchStates();
   }, []);
 
-  const {data, labels} = useMemo(() => {
-    const {data, labels} = formattedMemebersDataForGroupedBarChart(members);
-    console.log("data:")
+  const { data, labels } = useMemo(() => {
+    const { data, labels } = formattedMemebersDataForGroupedBarChart(members);
+    console.log("data:");
     console.log(data);
-    return {data, labels};
+    return { data, labels };
   }, [members]);
 
   const handleSelectCity = useCallback(
@@ -68,7 +77,7 @@ const IndustryCard = () => {
         </button>
       </div>
 
-      <GroupedBarChart data={data} labels={labels}/>
+      <GroupedBarChart data={data} labels={labels} />
     </div>
   );
 };

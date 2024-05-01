@@ -36,7 +36,7 @@ import { useEffect, useState, useCallback } from "react";
 
 // export { membersData, membersDataByLocation };
 
-const useMembersFakeData = (amount=200) => {
+const useMembersFakeData = (amount = 200) => {
   const generateUser = () => {
     const currentDate = new Date();
     const oneYearAgo = new Date(currentDate);
@@ -134,15 +134,15 @@ const useMembersFakeData = (amount=200) => {
       } else {
         reject(new Error("No states found!"));
       }
-    })
-  }, [members])
+    });
+  }, [members]);
 
   return {
     fetchMembersFakeData,
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
-    fetchCountriesFakeData
+    fetchCountriesFakeData,
   };
 };
 

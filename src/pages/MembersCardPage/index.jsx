@@ -27,8 +27,16 @@ import SearchBar from "../../components/SearchBar";
 // ];
 
 const MembersCard = () => {
-  const { members, loading, error, cities, states, refetchMembers, fetchCities, fetchStates } =
-    useFetchMemebrs({});
+  const {
+    members,
+    loading,
+    error,
+    cities,
+    states,
+    refetchMembers,
+    fetchCities,
+    fetchStates,
+  } = useFetchMemebrs({});
   const selectedCityRef = useRef({});
   const selectedStateRef = useRef({});
 

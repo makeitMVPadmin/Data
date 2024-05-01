@@ -44,9 +44,7 @@ const LocationCard = () => {
   );
 
   const handleSearch = useCallback(() => {
-    refetchMembers(
-      selectedCountryRef.current.content,
-    );
+    refetchMembers(selectedCountryRef.current.content);
   }, [selectedCountryRef, refetchMembers]);
 
   if (loading) return <div>Loading...</div>;

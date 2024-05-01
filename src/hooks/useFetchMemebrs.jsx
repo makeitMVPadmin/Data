@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import useMembersFakeData from "../data/members.data";
 
-const useFetchMemebrs = ({years = 1, amount = 200}) => {
+const useFetchMemebrs = ({ years = 1, amount = 200 }) => {
   const { communityId } = useParams();
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
     fetchMembersFakeDataByLocation,
     fetchCitiesFakeData,
     fetchStatesFakeData,
-    fetchCountriesFakeData
+    fetchCountriesFakeData,
   } = useMembersFakeData(amount);
   //   const [createdAtStart, createdAtEnd] = useYearRange();
 
@@ -53,8 +53,6 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
     [setMembers, setLoading, setError, fetchMembersFakeDataByLocation]
   );
 
-
-
   // has to fetch from db, because search function will refetch members
   const fetchCities = useCallback(
     async (withAll = true) => {
@@ -64,11 +62,11 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
         const all = withAll ? ["All"] : [];
         const uniqueCities = all.concat(Array.from(new Set(data)).sort());
         const citiesObjs = uniqueCities.map((element, index) => ({
-            content: element,
-            id: index + 1,
-          }));
+          content: element,
+          id: index + 1,
+        }));
         setCities(citiesObjs);
-        console.log("citiesObjs: ", uniqueCities)
+        console.log("citiesObjs: ", uniqueCities);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -86,9 +84,9 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
         const all = withAll ? ["All"] : [];
         const uniqueStates = all.concat(Array.from(new Set(data)).sort());
         const statesObjs = uniqueStates.map((element, index) => ({
-            content: element,
-            id: index + 1,
-          }));
+          content: element,
+          id: index + 1,
+        }));
         setStates(statesObjs);
         setLoading(false);
       } catch (err) {
@@ -98,27 +96,35 @@ const useFetchMemebrs = ({years = 1, amount = 200}) => {
     },
     [setStates, fetchStatesFakeData]
   );
-  const fetchCountries = useCallback(
-    async () => {
-      setLoading(true);
-      try {
-        const data = await fetchCountriesFakeData();
-        const uniqueCountries = Array.from(new Set(data)).sort();
-        const countriesObjs = uniqueCountries.map((element, index) => ({
-            content: element,
-            id: index + 1,
-          }));
-        setCountries(countriesObjs);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    },
-    [setCountries, fetchCountriesFakeData]
-  );
+  const fetchCountries = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await fetchCountriesFakeData();
+      const uniqueCountries = Array.from(new Set(data)).sort();
+      const countriesObjs = uniqueCountries.map((element, index) => ({
+        content: element,
+        id: index + 1,
+      }));
+      setCountries(countriesObjs);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  }, [setCountries, fetchCountriesFakeData]);
 
-  return { members, loading, error, cities, states, countries, refetchMembers, fetchCities, fetchStates, fetchCountries };
+  return {
+    members,
+    loading,
+    error,
+    cities,
+    states,
+    countries,
+    refetchMembers,
+    fetchCities,
+    fetchStates,
+    fetchCountries,
+  };
 };
 
 export default useFetchMemebrs;
