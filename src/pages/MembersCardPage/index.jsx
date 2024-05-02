@@ -10,8 +10,6 @@ import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
 import TotalSummary from "../../components/BarChart/TotalSummary";
 import SearchBar from "../../components/SearchBar";
-import { saveAs } from "file-saver";
-import Blob from "blob";
 import PDF from "../../components/PDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFButton from "../../components/PDFButton";
