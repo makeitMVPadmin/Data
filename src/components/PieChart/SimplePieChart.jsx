@@ -25,6 +25,9 @@ const SimplePieChart = ({ data, labels }) => {
     chart: {
       type: "pie",
       fontFamily: "Gilroy, Helvetica, Arial, sans-serif",
+      animations: {
+        enabled: false,
+      }
     },
     labels: labels,
     legend: {

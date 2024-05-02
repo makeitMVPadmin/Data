@@ -25,6 +25,7 @@ export class SvgToPngConverter {
         const img = new Image();
         _this.canvas.width = _this.imgPreview.clientWidth;
         _this.canvas.height = _this.imgPreview.clientHeight;
+        console.log("_this.canvas.height: ", _this.canvas.height)
         img.crossOrigin = "anonymous";
         img.src = _this.imgPreview.src;
         img.onload = function () {

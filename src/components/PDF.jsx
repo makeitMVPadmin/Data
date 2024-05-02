@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     flexGrow: 1,
-  },
-  image: {
-    height: 400
   }
 });
 const PDF = ({ title, chart }) => {
@@ -29,7 +26,7 @@ const PDF = ({ title, chart }) => {
           <Text>{title}</Text>
         </View>
         <View style={styles.section}>
-          {chart && <Image style={styles.image} src={chart}></Image>}
+          {chart && <Image src={chart}></Image>}
         </View>
       </Page>
     </Document>

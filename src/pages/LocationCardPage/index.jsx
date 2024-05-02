@@ -10,6 +10,10 @@ import SearchBar from "../../components/SearchBar";
 import SimplePieChart from "../../components/PieChart/SimplePieChart";
 import { formattedStatesDataForPieChart } from "../../services/members.services";
 import SearchButton from "../../components/SearchButton";
+import { SvgToPngConverter } from "../../utils/svg2png.helper";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../../components/PDF";
+import PDFButton from "../../components/PDFButton";
 
 const LocationCard = () => {
   const { members, loading, error, countries, refetchMembers, fetchCountries } =
@@ -63,13 +67,32 @@ const LocationCard = () => {
     return <SimplePieChart data={data} labels={stateLabels} />
   }, [data, stateLabels]);
 
+  const titleRef = useRef();
+  const chartRef = useRef();
+  const [urlData, setUrlData] = useState(null);
+  function svgToDataURL(svgElement) {
+    const svgString = new XMLSerializer().serializeToString(svgElement);
+    const base64String = btoa(svgString);
+    const uriData = `data:image/svg+xml;base64,${base64String}`;
+
+    new SvgToPngConverter().convertFromInput(uriData, function (imgData) {
+      setUrlData(imgData);
+    });
+  }
+
+  useEffect(() => {
+    if (chartRef.current) {
+      svgToDataURL(chartRef.current.getElementsByClassName("apexcharts-svg")[0]);
+    }
+  }, [chartRef, titleRef, data, stateLabels]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div className="font-['Corben'] text-3xl not-italic font-bold text-black">
-        Industry
+      <div ref={titleRef} className="font-['Corben'] text-3xl not-italic font-bold text-black">
+        Location
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
         {selectedCountry && <SearchBar data={countries} handleSelect={handleSelectCountry} value={selectedCountry}/>}
@@ -77,10 +100,21 @@ const LocationCard = () => {
           onClick={handleSearch}
           country={selectedCountry?.content}
         />
+        <div className="col-end-7">
+          {urlData && (
+            <PDFDownloadLink
+              document={
+                <PDF title={"Location"} chart={urlData} />
+              }
+              filename="chart"
+            >
+              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+            </PDFDownloadLink>
+          )}
+        </div>
       </div>
 
-      {/* <SimplePieChart data={data} labels={stateLabels} /> */}
-      {renderChart}
+      <div ref={chartRef}>{renderChart}</div>
     </div>
   );
 };
