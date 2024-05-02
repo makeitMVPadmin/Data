@@ -22,6 +22,9 @@ ChartJS.register(
 
 export const StackedBarChart = ({ data }) => {
   const options = {
+    animation: {
+      duration: 0,
+    },
     plugins: {
       title: {
         display: false,
@@ -54,17 +57,12 @@ export const StackedBarChart = ({ data }) => {
     },
   };
 
-  const parentRef  = useRef(0);
-  const { canvasSize } = useResizeChart(parentRef)
+  const parentRef = useRef(0);
+  const { canvasSize } = useResizeChart(parentRef);
 
   return (
     <div ref={parentRef}>
-      <Bar
-        options={options}
-        data={data}
-        width={canvasSize.width}
-        redraw
-      />
+      <Bar options={options} data={data} width={canvasSize.width} redraw />
     </div>
   );
 };

@@ -10,6 +10,12 @@ import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForStackedBarChart } from "../../services/members.services";
 import TotalSummary from "../../components/BarChart/TotalSummary";
 import SearchBar from "../../components/SearchBar";
+import { saveAs } from "file-saver";
+import Blob from "blob";
+import PDF from "../../components/PDF";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDFButton from "../../components/PDFButton";
+import SearchButton from "../../components/SearchButton";
 
 // have to be community cities and states
 // const cities = [
@@ -43,6 +49,9 @@ const MembersCard = () => {
   const [selectedCity, setSelectCity] = useState({});
   const [selectedState, setSelectState] = useState({});
 
+  const titleRef = useRef("");
+  const chartRef = useRef(null);
+
   useEffect(() => {
     fetchCities();
     fetchStates();
@@ -75,7 +84,7 @@ const MembersCard = () => {
   );
 
   const handleSearch = useCallback(
-    (city, state) => {
+    ({city, state}) => {
       // const city = selectedCity.content;
       // const state = selectedState.content;
       console.log("handleSearch");
@@ -120,7 +129,10 @@ const MembersCard = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div className="font-['Corben'] text-3xl not-italic font-bold text-black">
+      <div
+        className="font-['Corben'] text-3xl not-italic font-bold text-black"
+        ref={titleRef}
+      >
         Members
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
@@ -138,17 +150,33 @@ const MembersCard = () => {
             value={selectedState}
           />
         )}
-        <button
-          className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
-          onClick={() =>
-            handleSearch(selectedCity.content, selectedState.content)
-          }
-        >
-          Search
-        </button>
+
+        <SearchButton
+          onClick={handleSearch}
+          city={selectedCity?.content}
+          state={selectedState?.content}
+        />
+
+        <div className="col-end-7">
+          {chartRef.current && (
+            <PDFDownloadLink
+              document={
+                <PDF
+                  title={titleRef.current.textContent}
+                  chart={chartRef.current.children[0].children[0].toDataURL(
+                    "image/png"
+                  )}
+                />
+              }
+              filename="chart"
+            >
+              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+            </PDFDownloadLink>
+          )}
+        </div>
       </div>
 
-      {renderChart}
+      <div ref={chartRef}>{renderChart}</div>
 
       <div className="grid grid-cols-2">
         {summaries.map((item) => (

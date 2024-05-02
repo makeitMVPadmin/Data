@@ -9,6 +9,7 @@ import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import SearchBar from "../../components/SearchBar";
 import SimplePieChart from "../../components/PieChart/SimplePieChart";
 import { formattedStatesDataForPieChart } from "../../services/members.services";
+import SearchButton from "../../components/SearchButton";
 
 const LocationCard = () => {
   const { members, loading, error, countries, refetchMembers, fetchCountries } =
@@ -51,7 +52,7 @@ const LocationCard = () => {
   );
 
   const handleSearch = useCallback(
-    (country) => {
+    ({country}) => {
       // const country = selectedCountry;
       refetchMembers({ country });
     },
@@ -72,12 +73,10 @@ const LocationCard = () => {
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
         {selectedCountry && <SearchBar data={countries} handleSelect={handleSelectCountry} value={selectedCountry}/>}
-        <button
-          className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
-          onClick={() => handleSearch(selectedCountry.content)}
-        >
-          Search
-        </button>
+        <SearchButton
+          onClick={handleSearch}
+          country={selectedCountry?.content}
+        />
       </div>
 
       {/* <SimplePieChart data={data} labels={stateLabels} /> */}

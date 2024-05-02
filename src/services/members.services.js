@@ -103,6 +103,7 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
     data.push({ name: discipline, data: Object.values(sortedIndustries) });
   }
   const labels = Array.from(sortedTopIndustries);
+  console.log("formattedMemebersDataForGroupedBarChart: ", data, labels);
   return { data, labels };
 };
 

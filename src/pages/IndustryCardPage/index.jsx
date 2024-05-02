@@ -9,6 +9,10 @@ import useFetchMemebrs from "../../hooks/useFetchMemebrs";
 import { formattedMemebersDataForGroupedBarChart } from "../../services/members.services";
 import SearchBar from "../../components/SearchBar";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
+import SearchButton from "../../components/SearchButton";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../../components/PDF";
+import PDFButton from "../../components/PDFButton";
 
 const IndustryCard = () => {
   const {
@@ -25,6 +29,8 @@ const IndustryCard = () => {
   const selectedStateRef = useRef({});
   const [selectedCity, setSelectCity] = useState({});
   const [selectedState, setSelectState] = useState({});
+  const titleRef = useRef("");
+  const chartRef = useRef(null);
 
   // !!! should not fetch cities, states, members in each card, should create a context for the whole dashboard
   useEffect(() => {
@@ -59,7 +65,7 @@ const IndustryCard = () => {
   );
 
   const handleSearch = useCallback(
-    (city, state) => {
+    ({city, state}) => {
       let query = {};
       if ((city !== "All") & (state !== "All")) {
         query = {
@@ -102,18 +108,32 @@ const IndustryCard = () => {
             value={selectedState}
           />
         )}
-        <button
-          className="border-2 rounded-[10px] border-black w-28 bg-customYellow"
-          onClick={() =>
-            handleSearch(selectedCity.content, selectedState.content)
-          }
-        >
-          Search
-        </button>
+        <SearchButton
+          onClick={handleSearch}
+          city={selectedCity?.content}
+          state={selectedState?.content}
+        />
+
+        {/* <div className="col-end-7">
+          {chartRef.current && (
+            <PDFDownloadLink
+              document={
+                <PDF
+                  title={titleRef.current.textContent}
+                  chart={chartRef.current.children[0].children[0].toDataURL(
+                    "image/png"
+                  )}
+                />
+              }
+              filename="chart"
+            >
+              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+            </PDFDownloadLink>
+          )}
+        </div> */}
       </div>
 
-      {/* <GroupedBarChart data={data} labels={labels} /> */}
-      {renderChart}
+      <div ref={chartRef}>{renderChart}</div>
     </div>
   );
 };
