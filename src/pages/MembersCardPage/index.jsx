@@ -85,20 +85,18 @@ const MembersCard = () => {
 
   const handleSearch = useCallback(
     ({city, state}) => {
-      // const city = selectedCity.content;
-      // const state = selectedState.content;
-      console.log("handleSearch");
       let query = {};
       if ((city !== "All") & (state !== "All")) {
         query = {
           city,
           state,
         };
+        refetchMembers(query);
       } else {
         setSelectCity(cities[0]);
         setSelectState(states[0]);
       }
-      refetchMembers(query);
+      
     },
     [refetchMembers, cities, states]
   );
@@ -106,6 +104,14 @@ const MembersCard = () => {
   const renderChart = useMemo(() => {
     return <StackedBarChart data={data} />;
   }, [data]);
+
+  const [urlData, setUrlData] = useState(null);
+
+  useEffect(() => {
+    setUrlData(chartRef.current?.children[0].children[0].toDataURL(
+      "image/png"
+    ))
+  });
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -158,14 +164,12 @@ const MembersCard = () => {
         />
 
         <div className="col-end-7">
-          {chartRef.current && (
+          {urlData && (
             <PDFDownloadLink
               document={
                 <PDF
-                  title={titleRef.current.textContent}
-                  chart={chartRef.current.children[0].children[0].toDataURL(
-                    "image/png"
-                  )}
+                  title={"Members"}
+                  chart={urlData}
                 />
               }
               filename="chart"

@@ -28,6 +28,9 @@ export const GroupedBarChart = ({data, labels}) => {
   const options = {
     chart: {
       fontFamily: "Gilroy, Helvetica, Arial, sans-serif",
+      animations: {
+        enabled: false,
+      }
     },
     plotOptions: {
       bar: {

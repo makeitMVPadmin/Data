@@ -29,7 +29,7 @@ const PDF = ({ title, chart }) => {
           <Text>{title}</Text>
         </View>
         <View style={styles.section}>
-          <Image style={styles.image} src={chart}></Image>
+          {chart && <Image style={styles.image} src={chart}></Image>}
         </View>
       </Page>
     </Document>
