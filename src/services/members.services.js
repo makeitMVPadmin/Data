@@ -24,6 +24,11 @@ const initStackedBarChartData = {
   ],
 };
 
+const initGroupedBarChartData = {
+  data:[],
+  labels: []
+}
+
 const membersGroupbyCreatedAt = (members) => {
   const groupedUsers = members.reduce((groups, user) => {
     const createdAt = new Date(user.createdAt);
@@ -206,6 +211,7 @@ const newMembers = () => {
 
 export {
   initStackedBarChartData,
+  initGroupedBarChartData,
   formattedMemebersDataForStackedBarChart,
   formattedMemebersDataForGroupedBarChart,
   getCountriesFromMembers,
