@@ -59,9 +59,8 @@ const LocationCardRefine = () => {
   );
 
   useEffect(() => {
-    
     if (countries.length > 0) {
-        console.log("init: ", countries);
+      console.log("init: ", countries);
       setSelectedCountry(countries[0]);
       filterMembersByCountry(countries[0]);
     }
@@ -103,17 +102,18 @@ const LocationCardRefine = () => {
         Location
       </div>
       <div className="grid grid-cols-6 gap-4 my-6">
-        {selectedCountry && (
-          <SearchInput
-            data={countries}
-            handleSelect={handleSelectCountry}
-            selected={selectedCountry}
-          />
+        {(countries && selectedCountry) && (
+          <>
+            <SearchInput
+              data={countries}
+              handleSelect={handleSelectCountry}
+              selected={selectedCountry}
+            />
+
+            <SearchButton onClick={handleSearch} />
+          </>
         )}
-        <SearchButton
-          onClick={handleSearch}
-          country={selectedCountry?.content}
-        />
+
         <div className="col-end-7">
           {urlData && (
             <PDFDownloadLink
