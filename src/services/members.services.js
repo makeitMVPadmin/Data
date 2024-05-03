@@ -25,9 +25,14 @@ const initStackedBarChartData = {
 };
 
 const initGroupedBarChartData = {
-  data:[],
-  labels: []
-}
+  data: [],
+  labels: [],
+};
+
+const initPieChartData = {
+  data: [],
+  stateLabels: [],
+};
 
 const membersGroupbyCreatedAt = (members) => {
   const groupedUsers = members.reduce((groups, user) => {
@@ -140,10 +145,12 @@ function getCountriesFromMembers(members) {
     return group;
   }, new Set());
 
-  return Array.from(countries).sort().map((element, index) => ({
-    content: element,
-    id: index + 1,
-  }));
+  return Array.from(countries)
+    .sort()
+    .map((element, index) => ({
+      content: element,
+      id: index + 1,
+    }));
 }
 function getCitiesFromMembers(members) {
   const cities = members.reduce((group, user) => {
@@ -171,9 +178,10 @@ function getStatesFromMembers(members) {
   }));
 }
 
-function formattedStatesDataForPieChart(country, members) {
-  const filteredMembers = members.filter((user) => user.country === country);
-  const hash = filteredMembers.reduce((group, user) => {
+// function formattedStatesDataForPieChart(country, members) {
+// const filteredMembers = members.filter((user) => user.country === country);
+function formattedStatesDataForPieChart(members) {
+  const hash = members.reduce((group, user) => {
     const key = user.state;
     if (!group[key]) {
       group[key] = { count: 0, users: [] };
@@ -212,6 +220,7 @@ const newMembers = () => {
 export {
   initStackedBarChartData,
   initGroupedBarChartData,
+  initPieChartData,
   formattedMemebersDataForStackedBarChart,
   formattedMemebersDataForGroupedBarChart,
   getCountriesFromMembers,

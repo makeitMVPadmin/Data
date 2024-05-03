@@ -34,7 +34,7 @@ const IndustryCardRefine = () => {
   const [chartData, setChartData] = useState(initGroupedBarChartData);
 
   useEffect(() => {
-    console.log(members);
+    console.log("members: ", members);
     setChartData(formattedMemebersDataForGroupedBarChart([...members]));
   }, [members]);
 

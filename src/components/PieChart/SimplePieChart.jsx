@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { forwardRef, memo, useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 import "./SimplePieChart.scss";
 import {
   generateDynamicColors
 } from "../../utils/colors.helper";
 
-const SimplePieChart = ({ data, labels }) => {
+const SimplePieChart = memo(forwardRef(({ data, labels }, ref) => {
 //   const series = [44, 55, 13, 43, 22, 44, 55, 13];
 //   const [series, setseries] = useState(data);
 
@@ -68,8 +68,8 @@ const SimplePieChart = ({ data, labels }) => {
 
   return (
     <div id="simple-pie-container" className="container min-h-96">
-      <Chart options={options} series={data} type="pie" height={400} />
+      <Chart ref={ref} options={options} series={data} type="pie" height={400} />
     </div>
   );
-};
+}));
 export default SimplePieChart;
