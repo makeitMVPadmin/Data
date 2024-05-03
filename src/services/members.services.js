@@ -4,6 +4,26 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+const initStackedBarChartData = {
+  labels: [],
+  datasets: [
+    {
+      barThickness: 20,
+      minBarLength: 2,
+      label: "Active users",
+      data: [],
+      backgroundColor: "#FFD22F",
+    },
+    {
+      barThickness: 20,
+      minBarLength: 2,
+      label: "New users",
+      data: [],
+      backgroundColor: "#0099FF",
+    },
+  ],
+};
+
 const membersGroupbyCreatedAt = (members) => {
   const groupedUsers = members.reduce((groups, user) => {
     const createdAt = new Date(user.createdAt);
@@ -24,6 +44,7 @@ const membersGroupbyCreatedAt = (members) => {
 };
 
 const formattedMemebersDataForStackedBarChart = (members) => {
+  if (!members) return initStackedBarChartData;
   const aggregatedMembers = membersGroupbyCreatedAt(members);
   const monthsSortedbyDate = Object.keys(aggregatedMembers).sort(
     (a, b) => new Date(a) - new Date(b)
@@ -119,6 +140,31 @@ function getCountriesFromMembers(members) {
     id: index + 1,
   }));
 }
+function getCitiesFromMembers(members) {
+  const cities = members.reduce((group, user) => {
+    const city = user.city;
+    if (city) group.add(city);
+    return group;
+  }, new Set());
+
+  return ["All"].concat(Array.from(cities).sort()).map((element, index) => ({
+    content: element,
+    id: index + 1,
+  }));
+}
+
+function getStatesFromMembers(members) {
+  const states = members.reduce((group, user) => {
+    const state = user.state;
+    if (state) group.add(state);
+    return group;
+  }, new Set());
+
+  return ["All"].concat(Array.from(states).sort()).map((element, index) => ({
+    content: element,
+    id: index + 1,
+  }));
+}
 
 function formattedStatesDataForPieChart(country, members) {
   const filteredMembers = members.filter((user) => user.country === country);
@@ -159,9 +205,12 @@ const newMembers = () => {
 };
 
 export {
+  initStackedBarChartData,
   formattedMemebersDataForStackedBarChart,
   formattedMemebersDataForGroupedBarChart,
   getCountriesFromMembers,
+  getCitiesFromMembers,
+  getStatesFromMembers,
   formattedStatesDataForPieChart,
   totalMembers,
   newMembers,

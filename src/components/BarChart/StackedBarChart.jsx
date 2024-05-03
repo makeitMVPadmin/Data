@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, memo, forwardRef } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 
-export const StackedBarChart = ({ data }) => {
+export const StackedBarChart =  memo(forwardRef(({ data }, ref) => {
   const options = {
     animation: {
       duration: 0,
@@ -62,7 +62,7 @@ export const StackedBarChart = ({ data }) => {
 
   return (
     <div ref={parentRef}>
-      <Bar options={options} data={data} width={canvasSize.width} redraw />
+      <Bar ref={ref} options={options} data={data} width={canvasSize.width}  />
     </div>
   );
-};
+}));
