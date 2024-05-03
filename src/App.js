@@ -4,7 +4,7 @@ import "./styles/partials/_global.scss";
 import MembersCard from "./pages/MembersCardPage";
 import IndustryCard from "./pages/IndustryCardPage";
 import LocationCard from "./pages/LocationCardPage";
-import MembersCardPage from "./pages/MembersCardPage/MembersCardPage";
+import MembersCardRefine from "./pages/MembersCardPage/MembersCard";
 import { MembersDataProvider } from "./contexts/MembersContext";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         path="/members"
         element={
           <MembersDataProvider>
-            <MembersCardPage />
+            <MembersCardRefine />
           </MembersDataProvider>
         }
       />

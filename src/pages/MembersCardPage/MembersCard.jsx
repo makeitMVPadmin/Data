@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -18,8 +19,16 @@ import {
   getStatesFromMembers,
 } from "../../services/members.services";
 import SearchInput from "../../components/SearchInput";
+import { useMembersData } from "../../contexts/MembersContext";
 
-const MembersCardRefine = ({ members }) => {
+const MembersCardRefine = () => {
+  const {
+    data: membersData,
+    loading: loadingMembersData,
+    error: fetchMembersDataError,
+  } = useMembersData();
+  const members = useMemo(()=>membersData.members, [membersData]);
+
   const summaries = [
     {
       id: 1,
@@ -44,7 +53,7 @@ const MembersCardRefine = ({ members }) => {
 
   useEffect(() => {
     console.log(members);
-    setChartData(formattedMemebersDataForStackedBarChart(members));
+    setChartData(formattedMemebersDataForStackedBarChart([...members]));
   }, [members]);
 
   const cities = useMemo(() => {
@@ -101,6 +110,8 @@ const MembersCardRefine = ({ members }) => {
   useEffect(() => {
     setUrlData(chartRef.current?.canvas.toDataURL("image/png"));
   }, [setUrlData, chartRef, members, cities, states, chartData]);
+
+  if (fetchMembersDataError) return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
     <div className="grid grid-cols-1 gap-4 bg-lightBlue">
