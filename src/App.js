@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/HomePage/Home";
 import "./styles/partials/_global.scss";
 import { MembersDataProvider } from "./contexts/MembersContext";

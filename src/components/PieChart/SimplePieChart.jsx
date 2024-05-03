@@ -1,4 +1,4 @@
-import React, { forwardRef, memo, useMemo, useState } from "react";
+import React, { forwardRef, memo, useMemo } from "react";
 import Chart from "react-apexcharts";
 import "./SimplePieChart.scss";
 import {
