@@ -45,6 +45,14 @@ const useMembersFakeData = (amount = 200) => {
       from: oneYearAgo,
       to: currentDate,
     });
+    const joinedAt = faker.date.between({
+      from: oneYearAgo,
+      to: currentDate,
+    });
+    const updatedAt = faker.date.between({
+      from: oneYearAgo,
+      to: currentDate,
+    });
 
     return {
       id: faker.string.uuid(),
@@ -57,6 +65,8 @@ const useMembersFakeData = (amount = 200) => {
       state: faker.location.state(),
       city: faker.location.city(),
       createdAt: createdAt,
+      joinedAt: joinedAt,
+      updatedAt: updatedAt
     };
   };
 

@@ -34,47 +34,84 @@ const initPieChartData = {
   stateLabels: [],
 };
 
-const membersGroupbyCreatedAt = (members) => {
-  const groupedUsers = members.reduce((groups, user) => {
-    const createdAt = new Date(user.createdAt);
-    const month = createdAt.getMonth() + 1;
-    const year = createdAt.getFullYear();
+const generateMonthHash = (startDate = new Date()) => {
+  const currentDate = startDate;
+  const months = {};
 
-    const key = `${year}-${month}`;
-    if (!groups[key]) {
-      groups[key] = { count: 0, users: [] };
-    }
+  for (let i = 0; i < 12; i++) {
+    const date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - i,
+      1
+    );
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
 
-    groups[key].count += 1;
-    groups[key].users.push(user);
+    months[`${year}-${month}`] = {
+      activeUsersCount: 0,
+      activeUsers: [],
+      newUsersCount: 0,
+      newUsers: [],
+    };
+  }
 
-    return groups;
-  }, {});
-  return groupedUsers;
+  return months;
 };
+// {
+//   '2024-5': {
+//     activeUsersCount: 0,
+//     activeUsers: [],
+//     newUsersCount: 0,
+//     newUsers: []
+//   },
+// }
 
 const formattedMemebersDataForStackedBarChart = (members) => {
   if (!members) return initStackedBarChartData;
-  const aggregatedMembers = membersGroupbyCreatedAt(members);
-  const monthsSortedbyDate = Object.keys(aggregatedMembers).sort(
+  const datesHash = generateMonthHash(new Date());
+  const datesLabel = Object.keys(datesHash).sort(
     (a, b) => new Date(a) - new Date(b)
   );
 
+  for (const date of datesLabel) {
+    const membersByUpdatedAt = members.filter((user) => {
+      const updatedAt = new Date(user.updatedAt);
+      const month = updatedAt.getMonth() + 1;
+      const year = updatedAt.getFullYear();
+      // `${year}-${month.toString().padStart(2, "0")}`
+      const key = `${year}-${month}`;
+      return key === date;
+    });
+
+    const membersByJoinedAt = members.filter((user) => {
+      const joinedAt = new Date(user.joinedAt);
+      const month = joinedAt.getMonth() + 1;
+      const year = joinedAt.getFullYear();
+      const key = `${year}-${month}`;
+      return key === date;
+    });
+    datesHash[date].activeUsers = membersByUpdatedAt;
+    datesHash[date].activeUsersCount = membersByUpdatedAt.length;
+
+    datesHash[date].newUsers = membersByJoinedAt;
+    datesHash[date].newUsersCount = membersByJoinedAt.length;
+  }
+
   return {
-    labels: monthsSortedbyDate,
+    labels: datesLabel,
     datasets: [
       {
         barThickness: 20,
         minBarLength: 2,
         label: "Active users",
-        data: monthsSortedbyDate.map((key) => aggregatedMembers[key].count),
+        data: datesLabel.map((key) => datesHash[key].activeUsersCount),
         backgroundColor: "#FFD22F",
       },
       {
         barThickness: 20,
         minBarLength: 2,
         label: "New users",
-        data: monthsSortedbyDate.map(() => getRandomInt(0, 10)),
+        data: datesLabel.map((key) => datesHash[key].newUsersCount),
         backgroundColor: "#0099FF",
       },
     ],
