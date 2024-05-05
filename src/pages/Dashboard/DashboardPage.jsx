@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ExperienceGraph from '../../components/Example/experienceCard';
+import ExperienceGraph from '../ExperienceCardPage/experienceCard.jsx';
 import Modal from 'react-modal'; // Import if using react-modal
 import './DashboardPage.scss';
 import main from "../../functions/fetchUserData.js"
-// import {main} from '../../functions/fetchUserData.js'
 import { useParams } from 'react-router-dom';
 
 Modal.setAppElement('#root'); // Properly hide app content for screen readers

@@ -6,14 +6,15 @@ import { MembersDataProvider } from "./contexts/MembersContext.js";
 import MembersCardRefine from "./pages/MembersCardPage/MembersCard.jsx";
 import IndustryCardRefine from "./pages/IndustryCardPage/IndustryCard.jsx";
 import LocationCardRefine from "./pages/LocationCardPage/LocationCard.jsx";
+import ExperiencePage from "./pages/ExperienceCardPage/experienceCard.jsx";
 
 function App() {
   return (
     <MembersDataProvider>
       <Routes>
         <Route path='/' element={ <Home />}/>
-      <Route path='/dashboard/:communityId' element={ <DashboardPage />}/>
-
+        <Route path='/dashboard' element={ <DashboardPage />}/>
+        <Route path='/experience' element={ <ExperiencePage />}/>
         <Route path="/members" element={<MembersCardRefine />} />
         <Route path="/industry" element={<IndustryCardRefine />} />
         <Route path="/location" element={<LocationCardRefine />} />

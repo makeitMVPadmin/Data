@@ -1,26 +1,47 @@
 import { db } from  '../firebase-config.js';
 import { collection, doc, getDoc, query, where, getDocs} from 'firebase/firestore';
 
-async function getCommunityMembers(communityId) {
+async function getCommunityMembers(communityManagerId) {
   try {
     // Reference to the collection
     const communitiesRef = collection(db, 'Communities');
+    // console.log(communitiesRef)
     // Create a query against the collection looking for the communityId field
-    const q = query(communitiesRef, where("communityId", "==", communityId));
+    const q = query(communitiesRef, where("communityManagerId", "==", communityManagerId));
+    // console.log(q)
     const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot)
+    // console.log('SOMETING')
 
     if (querySnapshot.empty) {
         console.log("No such document!");
         return []; // Return an empty array or handle as needed
     } else {
-        const allMembers = querySnapshot.docs.flatMap(doc => doc.data().members || []);
-        return allMembers;
+      const listOfUserIdAndJoinedAt = [];
+        await Promise.all(querySnapshot.docs.map(async (doc) => {
+            // Access subcollection 'Members' within each document
+            const membersRef = collection(doc.ref, 'Members');
+            const membersSnapshot = await getDocs(membersRef);
+            membersSnapshot.forEach(memberDoc => {
+                // Extract user IDs from each document in the 'Members' subcollection
+                const userData = {
+                  user_id: memberDoc.data().user_id,
+                  joined_at: memberDoc.data().joinedAt
+                }
+                listOfUserIdAndJoinedAt.push(userData);
+            }
+          );
+        }));
+        return listOfUserIdAndJoinedAt;
     }
   } catch (error) {
     console.error("Error in getCommunityMembers:", error);
     throw error; // Re-throw the error to handle it further up in your call stack
   }
 }
+
+// getCommunityMembers('UID71318417');
+
 
 // Function takes list of users, recieved from the community table
 async function getUserDetails(listOfUsers) {
@@ -55,15 +76,21 @@ async function getUserDetails(listOfUsers) {
 
 async function main(request) {
   try {
-        const communityId = request['communityId'];
+        const communityManagerId = request['communityManagerId'];
         // const communityId = request.body.communityId
 
         // Await the asynchronous function to get the list of users
-        const listOfUsers = await getCommunityMembers(communityId);
+        const listOfUserIdAndJoinedAt = await getCommunityMembers(communityManagerId);
+
+        const listOfUsers = []
+        listOfUserIdAndJoinedAt.forEach(user => {
+          listOfUsers.push(user.user_id)
+        } )
 
         // Await the asynchronous function to get user data
         const userData = await getUserDetails(listOfUsers);
 
+        // console.log(userData)
         return userData;
   } catch (error) {
       console.error("Error in main function:", error);
@@ -71,7 +98,7 @@ async function main(request) {
   }
 }
 
-// const request ={communityId: '0000033'}
-// main(request)
+const request ={communityManagerId: 'UID71318417'}
+main(request)
 
 export default {main};
