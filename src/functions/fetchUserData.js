@@ -71,7 +71,7 @@ async function main(request) {
   }
 }
 
-const request ={communityId: '0000033'}
-main(request)
+// const request ={communityId: '0000033'}
+// main(request)
 
 export default {main};
