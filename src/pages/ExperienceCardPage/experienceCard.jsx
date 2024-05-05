@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import userData from './example.json';
 
 // Registering the necessary components for Chart.js
 ChartJS.register(
@@ -12,129 +13,107 @@ ChartJS.register(
   Legend,
 );
 
-function ExperienceGraph({userData}) {
-    const userExperience = [
-        {'user': 'Dan', 'experience': 'Learner'},
-        {'user': 'Tim', 'experience': 'Learner'},
-        {'user': 'Nick', 'experience': 'Learner'},
-        {'user': 'Mike', 'experience': 'Entry'},
-        {'user': 'Sara', 'experience': 'Junior'},
-        {'user': 'Jean', 'experience': 'Junior'},
-        {'user': 'Sam', 'experience': 'Senior'},
-        {'user': 'Donald', 'experience': 'Senior'},
-        {'user': 'Eli', 'experience': 'Senior'},
-        {'user': 'Isa', 'experience': 'Senior'},
-        {'user': 'JP', 'experience': 'Entry'},
-        {'user': 'Sabo', 'experience': 'Entry'},
-        {'user': 'Matt', 'experience': 'Senior'},
-        {'user': 'Daniel', 'experience': 'Senior'},
-    ];
+function ExperienceGraph() {
+  const [selectedYear, setSelectedYear] = useState('');
+  const [submittedYear, setSubmittedYear] = useState('');
 
-    // Color mapping for each experience level
-    const colorMapping = {
-        'Learner': '#0954B0',
-        'Entry': '#FFD22F',
-        'Junior': '#FF7070',
-        'Senior': '#52C059'
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent form submission from reloading the page
+    setSubmittedYear(selectedYear); // Update the submitted year state
+  };
+
+  const handleReset = () => {
+    setSelectedYear(''); // Reset the selected year
+    setSubmittedYear(''); // Reset the submitted year
+  };
+
+  const filteredData = userData.filter(user => {
+    if (!submittedYear) return true; // Show all data if no year has been submitted
+    const year = new Date(user.joinedAt).getFullYear();
+    return year.toString() === submittedYear;
+  }).map(user => ({
+    experience: user.experience,
+    country: user.locationCountry
+  }));
+
+  function categorizeExperience(years) {
+    if (years < 1) return 'Learner';
+    if (years >= 1 && years <= 2) return 'Entry';
+    if (years > 2 && years <= 3) return 'Junior';
+    if (years > 3) return 'Senior';
+  }
+
+  const experienceCount = filteredData.map(user => user.experience).reduce((acc, exp) => {
+    const category = categorizeExperience(exp);
+    acc[category] = (acc[category] || 0) + 1;
+    return acc;
+  }, {});
+
+  const colorMapping = {
+    'Learner': '#0954B0',
+    'Entry': '#FFD22F',
+    'Junior': '#FF7070',
+    'Senior': '#52C059'
+  };
+
+  const datasets = Object.keys(experienceCount).map((experience) => {
+    const color = colorMapping[experience] || '#FFFFFF';
+    return {
+        label: `${experience} (${experienceCount[experience]} users)`,
+        data: [experienceCount[experience]],
+        backgroundColor: color,
+        borderColor: color,
+        borderWidth: 1,
+        barThickness: 45
     };
+  });
 
-    const experienceYearMapping = {
-        'Learner': 'Less than 1 year',
-        'Entry': '1-2 years',     
-        'Junior': '2-3 years',
-        'Senior': 'Over 3 years'
-    };
-      
-    // Counting the number of users in each experience category
-    const experienceCounts = userExperience.reduce((acc, cur) => {
-        acc[cur.experience] = (acc[cur.experience] || 0) + 1;
-        return acc;
-    }, {});
+  const data = {
+    labels: ['User Experience Distribution'],
+    datasets: datasets
+  };
 
-    const datasets = Object.keys(experienceCounts).map((experience) => {
-        const color = colorMapping[experience] || '#FFFFFF';
-        const experienceLabel = `${experience}\n(${experienceYearMapping[experience] || 'Not specified'})`;  // Adding a line break
-        return {
-            label: experienceLabel,
-            data: [experienceCounts[experience]], // Each dataset has only one data point
-            backgroundColor: color,
-            borderColor: color.replace('0.6', '1'),
-            borderWidth: 1,
-            barThickness: 45
-        };
-    });
-    
+  const options = {
+    scales: {
+      x: { display: false, stacked: true },
+      y: { display: false, stacked: true }
+    },
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: true, position: 'bottom' },
+      title: {
+        display: true,
+        text: `Experience - Avg (${submittedYear || 'All Years'})`,
+        font: { size: 16, weight: 'bold' },
+        color: '#333'
+      }
+    }
+  };
 
-    // Chart data
-    const data = {
-        labels: ['User Experience Distribution'], // Single bar label
-        datasets: datasets
-    };
-
-    // Chart options
-    const options = {
-        scales: {
-            x: {
-                display: false,
-                stacked: true,
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    display: false
-                }
-            },
-            y: {
-                display: false,
-                stacked: true,
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    display: false
-                }
-            }
-        },
-        indexAxis: 'y',
-        elements: {
-            bar: {borderWidth: 2}
-        },
-        plugins: {
-            legend: {
-                display: true,
-                position: 'bottom',
-                fullWidth: false,
-                labels: {
-                    boxWidth: 10,
-                    padding: 21,
-                    font: {
-                        size: 10
-                    }
-                }
-            },
-            tooltip: {
-                mode: 'index',
-                intersect: false
-            },
-            title: {
-                display: true,
-                text: 'Experience - Avg',
-                padding: {
-                    top: 10,
-                    bottom: 10
-                },
-                font: {
-                    size: 16,
-                    weight: 'bold'
-                },
-                color: '#333'
-            }
-        }
-    };
-
-    return (
-        <Bar className='experienceGraph' data={data} options={options} />
-    );
+  return (
+    <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+      <div
+        className="font-['Corben'] text-3xl not-italic font-bold text-black my-6"
+      >
+        Experience
+      </div>
+      <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4">
+        <select onChange={handleYearChange} value={selectedYear} className="col-span-5">
+          <option value="">Select Year</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+        </select>
+        <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Submit</button>
+        <button type="button" onClick={handleReset} className="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">Reset</button>
+      </form>
+      <Bar className='experienceGraph' data={data} options={options} />
+    </div>
+  );
 }
 
 export default ExperienceGraph;

@@ -93,15 +93,12 @@ async function fetchUserData(request) {
           return user;
         });
 
-        console.log(userData)
-        // return userData;
+        // console.log(userData)
+        return userData;
   } catch (error) {
       console.error("Error in main function:", error);
       throw error;
   }
 }
-
-const request ={communityManagerId: 'UID71318417'}
-fetchUserData(request)
 
 export default {fetchUserData};
