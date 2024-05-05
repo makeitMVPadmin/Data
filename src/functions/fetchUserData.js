@@ -5,13 +5,9 @@ async function getCommunityMembers(communityManagerId) {
   try {
     // Reference to the collection
     const communitiesRef = collection(db, 'Communities');
-    // console.log(communitiesRef)
     // Create a query against the collection looking for the communityId field
     const q = query(communitiesRef, where("communityManagerId", "==", communityManagerId));
-    // console.log(q)
     const querySnapshot = await getDocs(q);
-    // console.log(querySnapshot)
-    // console.log('SOMETING')
 
     if (querySnapshot.empty) {
         console.log("No such document!");
@@ -39,8 +35,6 @@ async function getCommunityMembers(communityManagerId) {
     throw error; // Re-throw the error to handle it further up in your call stack
   }
 }
-
-// getCommunityMembers('UID71318417');
 
 
 // Function takes list of users, recieved from the community table
@@ -74,7 +68,7 @@ async function getUserDetails(listOfUsers) {
 }
 
 
-async function main(request) {
+async function fetchUserData(request) {
   try {
         const communityManagerId = request['communityManagerId'];
         // const communityId = request.body.communityId
@@ -88,10 +82,19 @@ async function main(request) {
         } )
 
         // Await the asynchronous function to get user data
-        const userData = await getUserDetails(listOfUsers);
+        let userData = await getUserDetails(listOfUsers);
 
-        // console.log(userData)
-        return userData;
+        // Add joinedAt field from listOfUserIdAndJoinedAt to userData
+        userData = userData.map(user => {
+          const matchedUserData = listOfUserIdAndJoinedAt.find(data => data.user_id === user.id);
+          if (matchedUserData) {
+            user.joinedAt = matchedUserData.joined_at.toDate().toLocaleString();
+          }
+          return user;
+        });
+
+        console.log(userData)
+        // return userData;
   } catch (error) {
       console.error("Error in main function:", error);
       throw error;
@@ -99,6 +102,6 @@ async function main(request) {
 }
 
 const request ={communityManagerId: 'UID71318417'}
-main(request)
+fetchUserData(request)
 
-export default {main};
+export default {fetchUserData};
