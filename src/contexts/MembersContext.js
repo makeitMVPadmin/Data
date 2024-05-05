@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo } from "react";
-import useFetchMembers from "../hooks/useFetchMembers";
+import useFetchMembers from "../hooks/useFetchMembers.jsx";
 
 const MembersContext = createContext(undefined);
 

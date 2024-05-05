@@ -1,16 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/HomePage/Home";
+import Home from "./pages/HomePage/Home.jsx";
 import "./styles/partials/_global.scss";
-import { MembersDataProvider } from "./contexts/MembersContext";
-import MembersCardRefine from "./pages/MembersCardPage/MembersCard";
-import IndustryCardRefine from "./pages/IndustryCardPage/IndustryCard";
-import LocationCardRefine from "./pages/LocationCardPage/LocationCard";
+import DashboardPage from './pages/Dashboard/DashboardPage.jsx'
+import { MembersDataProvider } from "./contexts/MembersContext.js";
+import MembersCardRefine from "./pages/MembersCardPage/MembersCard.jsx";
+import IndustryCardRefine from "./pages/IndustryCardPage/IndustryCard.jsx";
+import LocationCardRefine from "./pages/LocationCardPage/LocationCard.jsx";
 
 function App() {
   return (
     <MembersDataProvider>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path='/' element={ <Home />}/>
+      <Route path='/dashboard/:communityId' element={ <DashboardPage />}/>
 
         <Route path="/members" element={<MembersCardRefine />} />
         <Route path="/industry" element={<IndustryCardRefine />} />
