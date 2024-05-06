@@ -20,7 +20,7 @@ import { useMembersData } from "../../contexts/MembersContext";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 import { SvgToPngConverter } from "../../utils/svg2png.helper";
 
-const IndustryCardRefine = () => {
+const IndustryCardRefine = ({isOnDashboard}) => {
   const {
     data: membersData,
     loading: loadingMembersData,
@@ -34,7 +34,7 @@ const IndustryCardRefine = () => {
   const [chartData, setChartData] = useState(initGroupedBarChartData);
 
   useEffect(() => {
-    console.log("members: ", members);
+    // console.log("members: ", members);
     setChartData(formattedMemebersDataForGroupedBarChart([...members]));
   }, [members]);
 
@@ -107,50 +107,52 @@ const IndustryCardRefine = () => {
     return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div
-        className="font-['Corben'] text-3xl not-italic font-bold text-black"
-        ref={titleRef}
-      >
-        Industry
-      </div>
-      <div className="grid grid-cols-6 gap-4 my-6">
-        {cities && selectedCity && states && selectedState && (
-          <>
-            <SearchInput
-              data={cities}
-              handleSelect={handleSelectCity}
-              selected={selectedCity}
-            />
-
-            <SearchInput
-              data={states}
-              handleSelect={handleSelectState}
-              selected={selectedState}
-            />
-
-            <SearchButton onClick={handleSearch} />
-          </>
-        )}
-
-        <div className="col-end-7 max-w-max">
-          {urlData && chartData && chartRef && (
-            <PDFDownloadLink
-              document={<PDF title={"Industry"} chart={urlData} />}
-              filename="chart"
-            >
-              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
-            </PDFDownloadLink>
-          )}
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+      <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+        <div
+          className="font-['Corben'] text-3xl not-italic font-bold text-black"
+          ref={titleRef}
+        >
+          Industry
         </div>
-      </div>
+        <div className={`grid grid-cols-6 gap-4 my-6 ${isOnDashboard ? "hidden" : ""}`}>
+          {cities && selectedCity && states && selectedState && (
+            <>
+              <SearchInput
+                data={cities}
+                handleSelect={handleSelectCity}
+                selected={selectedCity}
+              />
 
-      <div>
-        <GroupedBarChart
-          ref={chartRef}
-          data={chartData.data}
-          labels={chartData.labels}
-        />
+              <SearchInput
+                data={states}
+                handleSelect={handleSelectState}
+                selected={selectedState}
+              />
+
+              <SearchButton onClick={handleSearch} />
+            </>
+          )}
+
+          <div className="col-end-7 max-w-max">
+            {urlData && chartData && chartRef && (
+              <PDFDownloadLink
+                document={<PDF title={"Industry"} chart={urlData} />}
+                filename="chart"
+              >
+                {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+              </PDFDownloadLink>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <GroupedBarChart
+            ref={chartRef}
+            data={chartData.data}
+            labels={chartData.labels}
+          />
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ import PDFButton from "../../components/PDFButton";
 import { useMembersData } from "../../contexts/MembersContext";
 import SearchInput from "../../components/SearchInput";
 
-const LocationCardRefine = () => {
+const LocationCardRefine = ({isOnDashboard}) => {
   const {
     data: membersData,
     loading: loadingMembersData,
@@ -46,7 +46,7 @@ const LocationCardRefine = () => {
   );
 
   const countries = useMemo(() => {
-    console.log("countries memo", members);
+    // console.log("countries memo", members);
     const data = getCountriesFromMembers([...members]);
     return data;
   }, [members]);
@@ -60,7 +60,7 @@ const LocationCardRefine = () => {
 
   useEffect(() => {
     if (countries.length > 0) {
-      console.log("init: ", countries);
+      // console.log("init: ", countries);
       setSelectedCountry(countries[0]);
       filterMembersByCountry(countries[0]);
     }
@@ -94,43 +94,45 @@ const LocationCardRefine = () => {
     return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div
-        ref={titleRef}
-        className="font-['Corben'] text-3xl not-italic font-bold text-black"
-      >
-        Location
-      </div>
-      <div className="grid grid-cols-6 gap-4 my-6">
-        {(countries && selectedCountry) && (
-          <>
-            <SearchInput
-              data={countries}
-              handleSelect={handleSelectCountry}
-              selected={selectedCountry}
-            />
-
-            <SearchButton onClick={handleSearch} />
-          </>
-        )}
-
-        <div className="col-end-7">
-          {urlData && (
-            <PDFDownloadLink
-              document={<PDF title={"Location"} chart={urlData} />}
-              filename="chart"
-            >
-              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
-            </PDFDownloadLink>
-          )}
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+      <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+        <div
+          ref={titleRef}
+          className="font-['Corben'] text-3xl not-italic font-bold text-black"
+        >
+          Location
         </div>
-      </div>
+        <div className={`grid grid-cols-6 gap-4 my-6 ${isOnDashboard ? "hidden" : ""}`}>
+          {(countries && selectedCountry) && (
+            <>
+              <SearchInput
+                data={countries}
+                handleSelect={handleSelectCountry}
+                selected={selectedCountry}
+              />
 
-      <SimplePieChart
-        ref={chartRef}
-        data={chartData.data}
-        labels={chartData.stateLabels}
-      />
+              <SearchButton onClick={handleSearch} />
+            </>
+          )}
+
+          <div className="col-end-7">
+            {urlData && (
+              <PDFDownloadLink
+                document={<PDF title={"Location"} chart={urlData} />}
+                filename="chart"
+              >
+                {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+              </PDFDownloadLink>
+            )}
+          </div>
+        </div>
+
+        <SimplePieChart
+          ref={chartRef}
+          data={chartData.data}
+          labels={chartData.stateLabels}
+        />
+      </div>
     </div>
   );
 };

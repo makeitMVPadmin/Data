@@ -2,7 +2,7 @@ import React, { forwardRef, memo } from "react";
 import Chart from "react-apexcharts";
 
 export const GroupedBarChart = memo(forwardRef(({data, labels}, ref) => {
-  console.log(data)
+  // console.log(data)
   // const series = [
   //   {
   //     name: "Discipline 1",

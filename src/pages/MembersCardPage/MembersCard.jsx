@@ -20,7 +20,8 @@ import {
 import SearchInput from "../../components/SearchInput";
 import { useMembersData } from "../../contexts/MembersContext";
 
-const MembersCardRefine = () => {
+const MembersCardRefine = ({isOnDashboard}) => {
+  // console.log(isOnDashboard)
   const {
     data: membersData,
     loading: loadingMembersData,
@@ -50,8 +51,12 @@ const MembersCardRefine = () => {
 
   const [chartData, setChartData] = useState(initStackedBarChartData);
 
+  // useEffect(() => {
+  //   setIsOnDashboard(false)
+  // }, [isOnDashboard])
+
   useEffect(() => {
-    console.log(members);
+    // console.log(members);
     setChartData(formattedMemebersDataForStackedBarChart([...members]));
   }, [members]);
 
@@ -113,58 +118,60 @@ const MembersCardRefine = () => {
   if (fetchMembersDataError) return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div
-        className="font-['Corben'] text-3xl not-italic font-bold text-black"
-        ref={titleRef}
-      >
-        Members
-      </div>
-      <div className="grid grid-cols-6 gap-4 my-6">
-        {cities && selectedCity && states && selectedState && (
-          <>
-            <SearchInput
-              data={cities}
-              handleSelect={handleSelectCity}
-              selected={selectedCity}
-            />
-
-            <SearchInput
-              data={states}
-              handleSelect={handleSelectState}
-              selected={selectedState}
-            />
-
-            <SearchButton onClick={handleSearch} />
-          </>
-        )}
-
-        <div className="col-end-7 max-w-max">
-          {urlData && chartData && chartRef && (
-            <PDFDownloadLink
-              document={<PDF title={"Members"} chart={urlData} />}
-              filename="chart"
-            >
-              {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
-            </PDFDownloadLink>
-          )}
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+      <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+        <div
+          className="font-['Corben'] text-3xl not-italic font-bold text-black"
+          ref={titleRef}
+        >
+          Members
         </div>
-      </div>
+        <div className={`grid grid-cols-6 gap-4 my-6 ${isOnDashboard ? "hidden" : ""}`}>
+          {cities && selectedCity && states && selectedState && (
+            <>
+              <SearchInput
+                data={cities}
+                handleSelect={handleSelectCity}
+                selected={selectedCity}
+              />
 
-      <div>
-        <StackedBarChart ref={chartRef} data={chartData} />
-      </div>
+              <SearchInput
+                data={states}
+                handleSelect={handleSelectState}
+                selected={selectedState}
+              />
 
-      <div className="grid grid-cols-2">
-        {summaries.map((item) => (
-          <TotalSummary
-            key={item.id}
-            title={item.title}
-            currentTotal={item.currentTotal}
-            currentDate={item.currentDate}
-            pastTotal={item.pastTotal}
-          />
-        ))}
+              <SearchButton onClick={handleSearch} />
+            </>
+          )}
+
+          <div className="col-end-7 max-w-max">
+            {urlData && chartData && chartRef && (
+              <PDFDownloadLink
+                document={<PDF title={"Members"} chart={urlData} />}
+                filename="chart"
+              >
+                {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+              </PDFDownloadLink>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <StackedBarChart ref={chartRef} data={chartData} />
+        </div>
+
+        <div className="grid grid-cols-2">
+          {summaries.map((item) => (
+            <TotalSummary
+              key={item.id}
+              title={item.title}
+              currentTotal={item.currentTotal}
+              currentDate={item.currentDate}
+              pastTotal={item.pastTotal}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

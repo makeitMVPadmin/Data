@@ -13,7 +13,7 @@ ChartJS.register(
   Legend,
 );
 
-function ExperienceGraph() {
+function ExperienceGraph({isOnDashboard}) {
   const [selectedYear, setSelectedYear] = useState('');
   const [submittedYear, setSubmittedYear] = useState('');
 
@@ -112,20 +112,23 @@ function ExperienceGraph() {
     <div className="font-['Corben'] text-3xl not-italic font-bold text-black my-6">
       Experience
     </div>
-    <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 items-center">
-      <select onChange={handleYearChange} value={selectedYear} className="col-span-3">
-        <option value="">Select Year</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-      </select>
-      <button type="submit" className="col-span-1 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
-        Submit
-      </button>
-      <button type="button" onClick={handleReset} className="col-span-1 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">
-        Reset
-      </button>
-    </form>
+    <div className={`${isOnDashboard ? "hidden" : ""}`}>
+      <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 items-center">
+        <select onChange={handleYearChange} value={selectedYear} className="col-span-3">
+          <option value="">Select Year</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+        </select>
+        <button type="submit" className="col-span-1 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+          Submit
+        </button>
+        <button type="button" onClick={handleReset} className="col-span-1 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">
+          Reset
+        </button>
+      </form>
+
+    </div>
     <div style={{ height: '400px', width: '100%' }}> {/* This is where the chart goes */}
       <Bar className='experienceGraph' data={data} options={options} />
     </div>
