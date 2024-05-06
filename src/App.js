@@ -7,13 +7,13 @@ import MembersCardRefine from "./pages/MembersCardPage/MembersCard.jsx";
 import IndustryCardRefine from "./pages/IndustryCardPage/IndustryCard.jsx";
 import LocationCardRefine from "./pages/LocationCardPage/LocationCard.jsx";
 import ExperiencePage from "./pages/ExperienceCardPage/experienceCard.jsx";
-import Home from "./pages/HomePage/HomePage"
-import Navbar from "./components/Navbar/Navbar";
-import Discipline from "./pages/DisciplinePage/Discipline";
+import Navbar from "./components/Navbar/Navbar.jsx";
+import Discipline from "./pages/DisciplinePage/Discipline.jsx";
 
 function App() {
   return (
     <MembersDataProvider>
+      <Navbar />
       <Routes>
         <Route path='/' element={ <Home />}/>
         <Route path='/dashboard' element={ <DashboardPage />}/>
@@ -21,16 +21,9 @@ function App() {
         <Route path="/members" element={<MembersCardRefine />} />
         <Route path="/industry" element={<IndustryCardRefine />} />
         <Route path="/location" element={<LocationCardRefine />} />
+        <Route path="/discipline" element={<Discipline />} />
       </Routes>
     </MembersDataProvider>
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/discipline" element={<Discipline />} />
-
-      </Routes>
-    </>
   );
 }
 
