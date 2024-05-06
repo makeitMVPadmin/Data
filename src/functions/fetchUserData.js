@@ -93,7 +93,6 @@ async function fetchUserData(request) {
           return user;
         });
 
-        // console.log(userData)
         return userData;
   } catch (error) {
       console.error("Error in main function:", error);

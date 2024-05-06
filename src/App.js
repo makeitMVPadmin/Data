@@ -16,7 +16,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={ <Home />}/>
-        <Route path='/dashboard' element={ <DashboardPage />}/>
+        <Route path='/dashboard/:communityId' element={ <DashboardPage />}/>
         <Route path='/experience' element={ <ExperiencePage />}/>
         <Route path="/members" element={<MembersCardRefine />} />
         <Route path="/industry" element={<IndustryCardRefine />} />
