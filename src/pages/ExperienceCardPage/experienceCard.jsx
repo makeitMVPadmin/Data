@@ -78,42 +78,59 @@ function ExperienceGraph() {
   };
 
   const options = {
+    responsive: true, // Ensure the chart is responsive
+    maintainAspectRatio: false, // Disable maintaining aspect ratio
+    aspectRatio: 1, // Adjust aspect ratio for your needs
     scales: {
-      x: { display: false, stacked: true },
-      y: { display: false, stacked: true }
+      x: {
+        display: false,
+        stacked: true,
+      },
+      y: {
+        display: false,
+        stacked: true
+      }
     },
     indexAxis: 'y',
     plugins: {
       legend: { display: true, position: 'bottom' },
       title: {
         display: true,
-        text: `Experience - Avg (${submittedYear || 'All Years'})`,
+        text: `Experience - (${submittedYear || 'All Years'})`,
         font: { size: 16, weight: 'bold' },
         color: '#333'
+      },
+      background: {
+        color: 'rgba(135,206,250, 0.3)', // light blue background using rgba
+        drawOnChartArea: true, // ensures the background is under the chart area
       }
     }
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 bg-lightBlue">
-      <div
-        className="font-['Corben'] text-3xl not-italic font-bold text-black my-6"
-      >
-        Experience
-      </div>
-      <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4">
-        <select onChange={handleYearChange} value={selectedYear} className="col-span-5">
-          <option value="">Select Year</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-        </select>
-        <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Submit</button>
-        <button type="button" onClick={handleReset} className="bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">Reset</button>
-      </form>
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}> 
+    <div className="font-['Corben'] text-3xl not-italic font-bold text-black my-6">
+      Experience
+    </div>
+    <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 items-center">
+      <select onChange={handleYearChange} value={selectedYear} className="col-span-3">
+        <option value="">Select Year</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+      </select>
+      <button type="submit" className="col-span-1 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+        Submit
+      </button>
+      <button type="button" onClick={handleReset} className="col-span-1 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">
+        Reset
+      </button>
+    </form>
+    <div style={{ height: '400px', width: '100%' }}> {/* This is where the chart goes */}
       <Bar className='experienceGraph' data={data} options={options} />
     </div>
-  );
+  </div>
+);
 }
 
 export default ExperienceGraph;
