@@ -63,8 +63,17 @@
   font-size: 42px;
 }
 .home__discipline {
-  box-sizing: border-box;
+  box-sizing: content-box;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.home__discipline-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .cards {

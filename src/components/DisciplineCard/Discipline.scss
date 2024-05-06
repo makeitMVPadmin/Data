@@ -2,7 +2,8 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
+    gap: 10px;
     align-items: flex-start;
     height: 100%;
 
@@ -16,24 +17,10 @@
 
     &__container {
         // box-sizing: border-box;
-        flex: 1;
-        height: 170px; // Set the height of the chart container
-        canvas {
-          height: 100% !important; // Important to ensure the chart respects the container height
-        }
-    }
-
-    &__yearFilter {
-        box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 30px 61px;
-        width: 100%;
-    }
-
-    &__leftYear {
-        display: flex;
-        flex-direction: row;
+        // flex: 1;
+        height: 250px;
+        // canvas {
+        //   height: 100% !important; 
+        // }
     }
 }

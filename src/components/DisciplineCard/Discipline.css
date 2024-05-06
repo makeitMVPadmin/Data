@@ -1,7 +1,8 @@
 .chart {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
+  gap: 10px;
   align-items: flex-start;
   height: 100%;
 }
@@ -13,21 +14,5 @@
   width: 100%;
 }
 .chart__container {
-  flex: 1;
-  height: 170px;
-}
-.chart__container canvas {
-  height: 100% !important;
-}
-.chart__yearFilter {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 30px 61px;
-  width: 100%;
-}
-.chart__leftYear {
-  display: flex;
-  flex-direction: row;
+  height: 250px;
 }/*# sourceMappingURL=Discipline.css.map */

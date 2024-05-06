@@ -1,3 +1,20 @@
 .discipline {
   border: 3px solid black;
+  padding: 10px;
+}
+.discipline__overview {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 30px;
+}
+.discipline__yearFilter {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+.discipline__leftYear {
+  display: flex;
+  flex-direction: row;
 }/*# sourceMappingURL=DisciplinePage.css.map */
