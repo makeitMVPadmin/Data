@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ExperienceGraph from '../ExperienceCardPage/experienceCard.jsx';
-import Modal from 'react-modal'; // Import if using react-modal
+import Modal from 'react-modal'; 
 import './DashboardPage.scss';
 import main from "../../functions/fetchUserData.js"
 import { useParams } from 'react-router-dom';
 
 Modal.setAppElement('#root'); // Properly hide app content for screen readers
 
-function DashboardPage() {
-    const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
+function ModalCode() {
+    const [modalIsOpen, setModalIsOpen] = useState(false); 
     const [userData, setUserData] = useState(null)
     const { communityId } = useParams();
 
@@ -57,4 +57,4 @@ function DashboardPage() {
     );
 }
 
-export default DashboardPage;
+export default ModalCode;
