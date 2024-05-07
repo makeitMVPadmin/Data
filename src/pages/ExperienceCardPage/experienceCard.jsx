@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import userData from './example.json';
+import searchIcon from "../../assets/icons/search-icon.svg";
 
 // Registering the necessary components for Chart.js
 ChartJS.register(
@@ -120,8 +121,12 @@ function ExperienceGraph({isOnDashboard}) {
           <option value="2023">2023</option>
           <option value="2022">2022</option>
         </select>
-        <button type="submit" className="col-span-1 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
-          Submit
+        <button
+          className="flex items-center justify-center gap-3 border-2 rounded-[10px] border-black w-40 mx-2 bg-customYellow"
+          type='submit'
+        >
+          <img src={searchIcon} alt="search" className="w-8 h-8" />
+          <p className="text-xl font-['Gilroy'] font-bold not-italic">Search</p>
         </button>
         <button type="button" onClick={handleReset} className="col-span-1 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">
           Reset

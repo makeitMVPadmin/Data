@@ -4,6 +4,8 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import PDFButton from '../PDFButton';
+import SearchButton from '../SearchButton';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -107,7 +109,7 @@ const DisciplineChart = ({ data, isOnDashboard }) => {
                     {/* <h3>5 <br />Disciplines</h3> */}
                 </div>
 
-                <div className={`${isOnDashboard ? "hidden" : ""}`}>
+                <div className={`grid grid-cols-6 gap-4 my-6${isOnDashboard ? "hidden" : ""}`}>
                     <div className='chart__leftYear'>
                         <select value={selectedYear} onChange={handleYearChange}>
                             <option value="">All Years</option>
@@ -115,10 +117,14 @@ const DisciplineChart = ({ data, isOnDashboard }) => {
                                 <option key={year} value={year}>{year}</option>
                             ))}
                         </select>
-                        <button onClick={() => filterDataByYear(selectedYear)}>Search</button>
+                        < SearchButton onClick={() => filterDataByYear(selectedYear)}/>
+                        {/* <button onClick={() => filterDataByYear(selectedYear)}>Search</button> */}
                     </div>
-
-                    <button  onClick={exportPDF}>Export to PDF</button>
+                    <div className="col-end-7 max-w-max">
+                        <button  onClick={exportPDF}>
+                            <PDFButton />
+                        </button>
+                    </div>
                 </div>
 
                 <div className='chart__container'>
