@@ -28,7 +28,7 @@ const Home = () => {
           <MembersCardRefine isOnDashboard={isOnDashboard}/>
         </div>
         <div className="cards home__discipline">
-          <DisciplineChart data={mockData}/>
+          <DisciplineChart data={mockData} isOnDashboard={isOnDashboard}/>
         </div>
       </div>
 

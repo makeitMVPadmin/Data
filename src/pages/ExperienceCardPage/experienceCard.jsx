@@ -109,7 +109,7 @@ function ExperienceGraph({isOnDashboard}) {
 
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}> 
-    <div className="font-['Corben'] text-3xl not-italic font-bold text-black my-6">
+    <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
       Experience
     </div>
     <div className={`${isOnDashboard ? "hidden" : ""}`}>

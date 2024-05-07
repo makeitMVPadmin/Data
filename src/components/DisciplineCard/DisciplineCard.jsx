@@ -7,7 +7,7 @@ import html2canvas from 'html2canvas';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DisciplineChart = ({ data }) => {
+const DisciplineChart = ({ data, isOnDashboard }) => {
     const [selectedYear, setSelectedYear] = useState('');
     const [filteredData, setFilteredData] = useState(null); 
 
@@ -100,30 +100,31 @@ const DisciplineChart = ({ data }) => {
     };
 
     return (
-        <div className='chart' id='chart-container'>
-            <div className='chart__header'>
-                <h3>Discipline </h3>
-                <h3>5 <br />Disciplines</h3>
-            </div>
-
-            <div className='chart__yearFilter'>
-                <div className='chart__leftYear'>
-                    <select value={selectedYear} onChange={handleYearChange}>
-                        <option value="">All Years</option>
-                        {[2020, 2021, 2022, 2023, 2024].map(year => (
-                            <option key={year} value={year}>{year}</option>
-                        ))}
-                    </select>
-                    <button onClick={() => filterDataByYear(selectedYear)}>Search</button>
+        <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+            <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+                <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
+                    Discipline
+                    {/* <h3>5 <br />Disciplines</h3> */}
                 </div>
 
-                <button  onClick={exportPDF}>Export to PDF</button>
-            </div>
+                <div className={`${isOnDashboard ? "hidden" : ""}`}>
+                    <div className='chart__leftYear'>
+                        <select value={selectedYear} onChange={handleYearChange}>
+                            <option value="">All Years</option>
+                            {[2020, 2021, 2022, 2023, 2024].map(year => (
+                                <option key={year} value={year}>{year}</option>
+                            ))}
+                        </select>
+                        <button onClick={() => filterDataByYear(selectedYear)}>Search</button>
+                    </div>
 
-            <div className='chart__container'>
-                <Doughnut data={filteredData} options={options} />
+                    <button  onClick={exportPDF}>Export to PDF</button>
+                </div>
+
+                <div className='chart__container'>
+                    <Doughnut data={filteredData} options={options} />
+                </div>
             </div>
-            
         </div>
     );
 };
