@@ -60,12 +60,12 @@ export const GroupedBarChart = memo(forwardRef(({data, labels}, ref) => {
     yaxis: {},
     legend: {
         show: true,
-        horizontalAlign: 'left',
+        horizontalAlign: 'center',
         fontSize: '22px',
         fontFamily: 'Gilroy-Bold, Helvetica, Arial',
         fontWeight: 400,
         itemMargin: {
-            horizontal: 100,
+            horizontal: 25,
             vertical: 10
         },
 

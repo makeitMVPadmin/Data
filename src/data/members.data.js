@@ -37,6 +37,10 @@ import { useEffect, useState, useCallback } from "react";
 // export { membersData, membersDataByLocation };
 
 const useMembersFakeData = (amount = 200) => {
+  const industries = ['Technology', 'Healthcare', 'Finance', 'Education', 'Entertainment'];
+  const disciplines = ['Engineering', 'Marketing', 'Design', 'Sales', 'Human Resources'];
+
+
   const generateUser = () => {
     const currentDate = new Date();
     const oneYearAgo = new Date(currentDate);
@@ -59,8 +63,8 @@ const useMembersFakeData = (amount = 200) => {
       location: `${faker.location.city()}, ${faker.location.state({
         abbreviated: true,
       })}`,
-      industry: `Industry ${Math.floor(Math.random() * 20)}`,
-      discipline: `Discipline ${Math.floor(Math.random() * 20)}`,
+      industry: industries[Math.floor(Math.random() * industries.length)],
+      discipline: disciplines[Math.floor(Math.random() * disciplines.length)],
       country: faker.location.country(),
       state: faker.location.state(),
       city: faker.location.city(),

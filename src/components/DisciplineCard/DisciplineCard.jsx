@@ -102,14 +102,14 @@ const DisciplineChart = ({ data, isOnDashboard }) => {
     };
 
     return (
-        <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+        <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
             <div className="grid grid-cols-1 gap-4 bg-lightBlue">
                 <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
                     Discipline
                     {/* <h3>5 <br />Disciplines</h3> */}
                 </div>
 
-                <div className={`grid grid-cols-6 gap-4 my-6${isOnDashboard ? "hidden" : ""}`}>
+                <div className={`grid grid-cols-6 gap-4 my-6 ${isOnDashboard ? "hidden" : ""}`}>
                     <div className='chart__leftYear'>
                         <select value={selectedYear} onChange={handleYearChange}>
                             <option value="">All Years</option>

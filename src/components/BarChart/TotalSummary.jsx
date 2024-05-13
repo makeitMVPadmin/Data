@@ -12,7 +12,7 @@ const TotalSummary = ({ title, currentTotal, currentDate, pastTotal }) => {
   };
 
   return (
-    <div className="grid grid-cols-4 text-center">
+    <div className="grid grid-cols-3 text-center" style={{justifySelf: 'center', display: "flex", flexDirection: 'column'}}>
       <div className="col-span-2 text-xl not-italic font-extrabold text-black">
         {title}
       </div>

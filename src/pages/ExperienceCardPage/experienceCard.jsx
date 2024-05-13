@@ -3,6 +3,10 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import userData from './example.json';
 import searchIcon from "../../assets/icons/search-icon.svg";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../../components/PDF";
+import PDFButton from "../../components/PDFButton";
+
 
 // Registering the necessary components for Chart.js
 ChartJS.register(
@@ -109,13 +113,13 @@ function ExperienceGraph({isOnDashboard}) {
   };
 
   return (
-    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}> 
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}> 
     <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
       Experience
     </div>
     <div className={`${isOnDashboard ? "hidden" : ""}`}>
       <form onSubmit={handleSubmit} className="grid grid-cols-6 gap-4 items-center">
-        <select onChange={handleYearChange} value={selectedYear} className="col-span-3">
+        <select onChange={handleYearChange} value={selectedYear} className="">
           <option value="">Select Year</option>
           <option value="2024">2024</option>
           <option value="2023">2023</option>
@@ -128,13 +132,22 @@ function ExperienceGraph({isOnDashboard}) {
           <img src={searchIcon} alt="search" className="w-8 h-8" />
           <p className="text-xl font-['Gilroy'] font-bold not-italic">Search</p>
         </button>
-        <button type="button" onClick={handleReset} className="col-span-1 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700">
+        <button type="button" onClick={handleReset} className="col-span-.5 bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700" style={{width: '100px'}}>
           Reset
         </button>
+        <div className="col-end-7">
+              {(
+                <PDFDownloadLink
+                document={<PDF title={"Location"} />}
+                filename="chart"
+                >
+                  {({ loading }) => (loading ? <PDFButton /> : <PDFButton />)}
+                </PDFDownloadLink>
+              )}
+        </div>
       </form>
-
     </div>
-    <div style={{ height: '400px', width: '100%' }}> {/* This is where the chart goes */}
+    <div style={{ height: '400px', width: '100%' }}>
       <Bar className='experienceGraph' data={data} options={options} />
     </div>
   </div>

@@ -19,6 +19,7 @@ import {
 } from "../../services/members.services";
 import SearchInput from "../../components/SearchInput";
 import { useMembersData } from "../../contexts/MembersContext";
+import { toBePartiallyChecked } from "@testing-library/jest-dom/matchers";
 
 const MembersCardRefine = ({isOnDashboard}) => {
   // console.log(isOnDashboard)
@@ -118,7 +119,7 @@ const MembersCardRefine = ({isOnDashboard}) => {
   if (fetchMembersDataError) return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
-    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%' }}>
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>
       <div className="grid grid-cols-1 gap-4 bg-lightBlue">
         <div
           className="font-['Corben'] text-3xl not-italic font-bold text-black"
@@ -169,6 +170,7 @@ const MembersCardRefine = ({isOnDashboard}) => {
               currentTotal={item.currentTotal}
               currentDate={item.currentDate}
               pastTotal={item.pastTotal}
+              isOnDashboard={isOnDashboard}
             />
           ))}
         </div>
