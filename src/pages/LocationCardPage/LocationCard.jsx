@@ -19,13 +19,13 @@ import PDFButton from "../../components/PDFButton";
 import { useMembersData } from "../../contexts/MembersContext";
 import SearchInput from "../../components/SearchInput";
 
-const LocationCardRefine = ({isOnDashboard}) => {
-  const {
-    data: membersData,
-    loading: loadingMembersData,
-    error: fetchMembersDataError,
-  } = useMembersData();
-  const members = useMemo(() => membersData.members, [membersData]);
+const LocationCardRefine = ({isOnDashboard, userData}) => {
+  // const {
+  //   data: membersData,
+  //   loading: loadingMembersData,
+  //   error: fetchMembersDataError,
+  // } = useMembersData();
+  const members = useMemo(() => userData, [userData]);
 
   const [selectedCountry, setSelectedCountry] = useState({});
 
@@ -90,8 +90,8 @@ const LocationCardRefine = ({isOnDashboard}) => {
     }
   }, [setUrlData, chartRef, members, countries, chartData]);
 
-  if (fetchMembersDataError)
-    return <div>Error: {fetchMembersDataError.message}</div>;
+  // if (fetchMembersDataError)
+  //   return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>

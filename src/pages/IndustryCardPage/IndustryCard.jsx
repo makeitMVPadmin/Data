@@ -16,17 +16,12 @@ import {
   getStatesFromMembers,
 } from "../../services/members.services";
 import SearchInput from "../../components/SearchInput";
-import { useMembersData } from "../../contexts/MembersContext";
 import { GroupedBarChart } from "../../components/BarChart/GroupedBarChart";
 import { SvgToPngConverter } from "../../utils/svg2png.helper";
 
-const IndustryCardRefine = ({isOnDashboard}) => {
-  const {
-    data: membersData,
-    loading: loadingMembersData,
-    error: fetchMembersDataError,
-  } = useMembersData();
-  const members = useMemo(() => membersData.members, [membersData]);
+const IndustryCardRefine = ({isOnDashboard, userData}) => {
+
+  const members = useMemo(() => userData, [userData]);
 
   const [selectedCity, setSelectCity] = useState(null);
   const [selectedState, setSelectState] = useState(null);
@@ -34,7 +29,6 @@ const IndustryCardRefine = ({isOnDashboard}) => {
   const [chartData, setChartData] = useState(initGroupedBarChartData);
 
   useEffect(() => {
-    // console.log("members: ", members);
     setChartData(formattedMemebersDataForGroupedBarChart([...members]));
   }, [members]);
 
@@ -103,8 +97,8 @@ const IndustryCardRefine = ({isOnDashboard}) => {
       }
   }, [setUrlData, chartRef, members, cities, states, chartData]);
 
-  if (fetchMembersDataError)
-    return <div>Error: {fetchMembersDataError.message}</div>;
+  // if (fetchMembersDataError)
+  //   return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>

@@ -9,7 +9,7 @@ const SearchInput = ({ data, handleSelect, selected }) => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    console.log("SearchInput");
+    // console.log("SearchInput");
   },[])
 
   const filteredData =

@@ -9,12 +9,13 @@ import SearchButton from '../SearchButton';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DisciplineChart = ({ data, isOnDashboard }) => {
+const DisciplineChart = ({ isOnDashboard, userData }) => {
+    
     const [selectedYear, setSelectedYear] = useState('');
     const [filteredData, setFilteredData] = useState(null); 
 
-    const aggregateData = useCallback((data) => {
-        const disciplineCounts = data.reduce((acc, item) => {
+    const aggregateData = useCallback((userData) => {
+        const disciplineCounts = userData.reduce((acc, item) => {
             acc[item.discipline] = (acc[item.discipline] || 0) + 1;
             return acc;
         }, {});
@@ -34,19 +35,19 @@ const DisciplineChart = ({ data, isOnDashboard }) => {
     }, []);
 
     const filterDataByYear = useCallback((year) => {
-        const filtered = data.filter(item => item.createdAt.toString() === year);
+        const filtered = userData.filter(item => item.createdAt.toString() === year);
         setFilteredData(aggregateData(filtered));
-    }, [data, aggregateData]);
+    }, [userData, aggregateData]);
 
     useEffect(() => {
-        if (data) {
+        if (userData) {
             if (selectedYear) {
                 filterDataByYear(selectedYear);
             } else {
-                setFilteredData(aggregateData(data)); 
+                setFilteredData(aggregateData(userData)); 
             }
         }
-    }, [selectedYear, data, filterDataByYear, aggregateData]);
+    }, [selectedYear, userData, filterDataByYear, aggregateData]);
 
     const handleYearChange = (event) => {
         setSelectedYear(event.target.value);

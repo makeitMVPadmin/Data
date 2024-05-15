@@ -4,7 +4,6 @@ const useResizeChart = (parentRef) => {
   const [canvasSize, setCanvasSize] = useState({ width: "100%" });
 
   useEffect(() => {
-    console.log(parentRef.current.clientWidth)
     const handleResize = () => {
       setCanvasSize({
         width: parentRef.current.clientWidth,

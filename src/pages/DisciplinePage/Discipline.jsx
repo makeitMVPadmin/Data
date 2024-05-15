@@ -5,11 +5,11 @@ import mockData from "../../data/mockData.json"
 
 
 
-const Discipline = () => {
+const Discipline = ({userData}) => {
   return (
     <div className="discipline">
         <div className="discipline__overview">
-          <DisciplineChart data={mockData}/>
+          <DisciplineChart userData={userData}/>
         </div>
     </div>
   );

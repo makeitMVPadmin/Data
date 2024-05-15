@@ -100,4 +100,4 @@ async function fetchUserData(request) {
   }
 }
 
-export default {fetchUserData};
+export default fetchUserData;

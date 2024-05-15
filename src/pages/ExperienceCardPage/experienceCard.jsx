@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import userData from './example.json';
@@ -18,7 +19,8 @@ ChartJS.register(
   Legend,
 );
 
-function ExperienceGraph({isOnDashboard}) {
+function ExperienceGraph({isOnDashboard, userData}) {
+
   const [selectedYear, setSelectedYear] = useState('');
   const [submittedYear, setSubmittedYear] = useState('');
 

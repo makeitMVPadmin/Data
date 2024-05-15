@@ -18,17 +18,10 @@ import {
   getStatesFromMembers,
 } from "../../services/members.services";
 import SearchInput from "../../components/SearchInput";
-import { useMembersData } from "../../contexts/MembersContext";
-import { toBePartiallyChecked } from "@testing-library/jest-dom/matchers";
 
-const MembersCardRefine = ({isOnDashboard}) => {
-  // console.log(isOnDashboard)
-  const {
-    data: membersData,
-    loading: loadingMembersData,
-    error: fetchMembersDataError,
-  } = useMembersData();
-  const members = useMemo(()=>membersData.members, [membersData]);
+const MembersCardRefine = ({isOnDashboard, userData}) => {
+  // console.log(isOnDashb
+  const members = useMemo(()=>userData, [userData]);
 
   const summaries = [
     {
@@ -52,12 +45,7 @@ const MembersCardRefine = ({isOnDashboard}) => {
 
   const [chartData, setChartData] = useState(initStackedBarChartData);
 
-  // useEffect(() => {
-  //   setIsOnDashboard(false)
-  // }, [isOnDashboard])
-
   useEffect(() => {
-    // console.log(members);
     setChartData(formattedMemebersDataForStackedBarChart([...members]));
   }, [members]);
 
@@ -115,8 +103,6 @@ const MembersCardRefine = ({isOnDashboard}) => {
   useEffect(() => {
     setUrlData(chartRef.current?.canvas.toDataURL("image/png"));
   }, [setUrlData, chartRef, members, cities, states, chartData]);
-
-  if (fetchMembersDataError) return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>
