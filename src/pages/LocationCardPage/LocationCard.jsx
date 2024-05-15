@@ -20,11 +20,7 @@ import { useMembersData } from "../../contexts/MembersContext";
 import SearchInput from "../../components/SearchInput";
 
 const LocationCardRefine = ({isOnDashboard, userData}) => {
-  // const {
-  //   data: membersData,
-  //   loading: loadingMembersData,
-  //   error: fetchMembersDataError,
-  // } = useMembersData();
+
   const members = useMemo(() => userData, [userData]);
 
   const [selectedCountry, setSelectedCountry] = useState({});
@@ -35,7 +31,7 @@ const LocationCardRefine = ({isOnDashboard, userData}) => {
     (selectedCountry) => {
       if (selectedCountry) {
         const data = members.filter(
-          (user) => user.country === selectedCountry.content
+          (user) => user.locationCountry === selectedCountry.content
         );
         setChartData(formattedStatesDataForPieChart(data));
       } else {
@@ -60,7 +56,6 @@ const LocationCardRefine = ({isOnDashboard, userData}) => {
 
   useEffect(() => {
     if (countries.length > 0) {
-      // console.log("init: ", countries);
       setSelectedCountry(countries[0]);
       filterMembersByCountry(countries[0]);
     }
@@ -94,7 +89,7 @@ const LocationCardRefine = ({isOnDashboard, userData}) => {
   //   return <div>Error: {fetchMembersDataError.message}</div>;
 
   return (
-    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
       <div className="grid grid-cols-1 gap-4 bg-lightBlue">
         <div
           ref={titleRef}

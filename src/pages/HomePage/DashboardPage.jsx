@@ -1,55 +1,20 @@
 import "./HomePage.scss";
 import React, { useEffect, useState } from "react";
 import DisciplineChart from "../../components/DisciplineCard/DisciplineCard";
-import mockData from "../../data/mockData.json"
 import LocationCardRefine from "../LocationCardPage/LocationCard";
 import MembersCardRefine from "../MembersCardPage/MembersCard";
 import IndustryCardRefine from "../IndustryCardPage/IndustryCard";
 import ExperienceGraph from "../ExperienceCardPage/experienceCard";
-import fetchUserData from "../../functions/fetchUserData";
-import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 
-let IDID = 'UID18137005'
 
-const Home = () => {
-  const { communityManagerId } = useParams();
+const DashboardPage = ({userData}) => {
+
   const [isOnDashboard, setIsOnDashboard] = useState(true)
-  const [userData, setUserData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchUserData({ communityManagerId: communityManagerId });
-        setUserData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-    if (communityManagerId) {
-      fetchData();
-    }
-  }, [communityManagerId]);
-
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  console.log(userData)
 
   return (
     <>
-      <Navbar/>
+      <Navbar userData={userData}/>
       <div className="home">
         <div className="home__upper">
           <div className="home__overview">
@@ -87,4 +52,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default DashboardPage;

@@ -177,7 +177,7 @@ const formattedMemebersDataForGroupedBarChart = (members) => {
 
 function getCountriesFromMembers(members) {
   const countries = members.reduce((group, user) => {
-    const country = user.country;
+    const country = user.locationCountry;
     if (country) group.add(country);
     return group;
   }, new Set());
@@ -191,7 +191,7 @@ function getCountriesFromMembers(members) {
 }
 function getCitiesFromMembers(members) {
   const cities = members.reduce((group, user) => {
-    const city = user.city;
+    const city = user.locationCity;
     if (city) group.add(city);
     return group;
   }, new Set());
@@ -204,7 +204,7 @@ function getCitiesFromMembers(members) {
 
 function getStatesFromMembers(members) {
   const states = members.reduce((group, user) => {
-    const state = user.state;
+    const state = user.locationState;
     if (state) group.add(state);
     return group;
   }, new Set());
@@ -219,7 +219,7 @@ function getStatesFromMembers(members) {
 // const filteredMembers = members.filter((user) => user.country === country);
 function formattedStatesDataForPieChart(members) {
   const hash = members.reduce((group, user) => {
-    const key = user.state;
+    const key = user.locationState;
     if (!group[key]) {
       group[key] = { count: 0, users: [] };
     }

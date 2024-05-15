@@ -19,7 +19,11 @@ ChartJS.register(
   Legend,
 );
 
-function ExperienceGraph({isOnDashboard, userData}) {
+function ExperienceGraph({isOnDashboard, userData: propUserData}) {
+
+  const location = useLocation();
+  const { userData: stateUserData } = location.state || {};
+  const userData = propUserData || stateUserData;
 
   const [selectedYear, setSelectedYear] = useState('');
   const [submittedYear, setSubmittedYear] = useState('');
@@ -115,7 +119,7 @@ function ExperienceGraph({isOnDashboard, userData}) {
   };
 
   return (
-    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}> 
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}> 
     <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
       Experience
     </div>

@@ -105,7 +105,7 @@ const MembersCardRefine = ({isOnDashboard, userData}) => {
   }, [setUrlData, chartRef, members, cities, states, chartData]);
 
   return (
-    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%', border: '3px solid black' }}>
+    <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
       <div className="grid grid-cols-1 gap-4 bg-lightBlue">
         <div
           className="font-['Corben'] text-3xl not-italic font-bold text-black"
