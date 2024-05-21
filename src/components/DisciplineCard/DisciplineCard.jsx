@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import PDFButton from '../PDFButton';
 import SearchButton from '../SearchButton';
+import Icons from '../../functions/icons_holder';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -105,6 +106,7 @@ const DisciplineChart = ({ isOnDashboard, userData }) => {
     return (
         <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
             <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+            <img className={`${isOnDashboard ? "hidden" : ""}`} src={Icons().IconArrowBack} alt="Back Arrow" onClick={() => window.history.back()} />
                 <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
                     Discipline
                     {/* <h3>5 <br />Disciplines</h3> */}

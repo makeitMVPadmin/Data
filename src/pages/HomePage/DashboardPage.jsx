@@ -6,14 +6,18 @@ import MembersCardRefine from "../MembersCardPage/MembersCard";
 import IndustryCardRefine from "../IndustryCardPage/IndustryCard";
 import ExperienceGraph from "../ExperienceCardPage/experienceCard";
 import Navbar from "../../components/Navbar/Navbar";
+import TempUi from "../../components/TempUi/TempUi";
 
 
 const DashboardPage = ({userData}) => {
 
   const [isOnDashboard, setIsOnDashboard] = useState(true)
 
+  const numberOfUsers = userData.length
+
   return (
-    <>
+    <div className="dash__body">
+      <TempUi />
       <Navbar userData={userData}/>
       <div className="home">
         <div className="home__upper">
@@ -23,7 +27,7 @@ const DashboardPage = ({userData}) => {
             </div>
             <div className="home__total-members">
               <h2 className="home__members-font">Total Members</h2>
-              <h1 className="home__number">13823</h1>
+              <h1 className="home__number">{numberOfUsers}</h1>
             </div>
           </div>
 
@@ -48,7 +52,7 @@ const DashboardPage = ({userData}) => {
         </div>
 
       </div>
-    </>
+    </div>
   );
 };
 

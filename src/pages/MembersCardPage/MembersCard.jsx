@@ -18,6 +18,7 @@ import {
   getStatesFromMembers,
 } from "../../services/members.services";
 import SearchInput from "../../components/SearchInput";
+import Icons from "../../functions/icons_holder";
 
 const MembersCardRefine = ({isOnDashboard, userData}) => {
   // console.log(isOnDashb
@@ -107,6 +108,7 @@ const MembersCardRefine = ({isOnDashboard, userData}) => {
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
       <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+      <img className={`${isOnDashboard ? "hidden" : ""}`} src={Icons().IconArrowBack} alt="Back Arrow" onClick={() => window.history.back()} />
         <div
           className="font-['Corben'] text-3xl not-italic font-bold text-black"
           ref={titleRef}

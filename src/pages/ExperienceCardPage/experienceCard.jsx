@@ -7,6 +7,7 @@ import searchIcon from "../../assets/icons/search-icon.svg";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDF from "../../components/PDF";
 import PDFButton from "../../components/PDFButton";
+import Icons from '../../functions/icons_holder';
 
 
 // Registering the necessary components for Chart.js
@@ -120,6 +121,7 @@ function ExperienceGraph({isOnDashboard, userData: propUserData}) {
 
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}> 
+    <img className={`${isOnDashboard ? "hidden" : ""}`} src={Icons().IconArrowBack} alt="Back Arrow" onClick={() => window.history.back()} />
     <div className="font-['Corben'] text-3xl not-italic font-bold text-black"> {/* commented out my-6 */}
       Experience
     </div>

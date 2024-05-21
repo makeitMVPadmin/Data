@@ -18,6 +18,7 @@ import PDF from "../../components/PDF";
 import PDFButton from "../../components/PDFButton";
 import { useMembersData } from "../../contexts/MembersContext";
 import SearchInput from "../../components/SearchInput";
+import Icons from "../../functions/icons_holder";
 
 const LocationCardRefine = ({isOnDashboard, userData}) => {
 
@@ -91,6 +92,7 @@ const LocationCardRefine = ({isOnDashboard, userData}) => {
   return (
     <div className="bg-lightBlue" style={{ padding: '20px', width: '100%'}}>
       <div className="grid grid-cols-1 gap-4 bg-lightBlue">
+      <img className={`${isOnDashboard ? "hidden" : ""}`} src={Icons().IconArrowBack} alt="Back Arrow" onClick={() => window.history.back()} />
         <div
           ref={titleRef}
           className="font-['Corben'] text-3xl not-italic font-bold text-black"
